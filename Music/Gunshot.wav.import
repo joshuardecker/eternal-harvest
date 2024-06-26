@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bjq1qwfsdacek"
-path="res://.godot/imported/The_Feet.wav-2922d12c297073a08a1e1c396beab5fe.sample"
+uid="uid://d3wkrjdt6paoj"
+path="res://.godot/imported/Gunshot.wav-8ff9ea6af2ebb11611f22d440a627b1a.sample"
 
 [deps]
 
-source_file="res://World/Music/The_Feet.wav"
-dest_files=["res://.godot/imported/The_Feet.wav-2922d12c297073a08a1e1c396beab5fe.sample"]
+source_file="res://Music/Gunshot.wav"
+dest_files=["res://.godot/imported/Gunshot.wav-8ff9ea6af2ebb11611f22d440a627b1a.sample"]
 
 [params]
 
