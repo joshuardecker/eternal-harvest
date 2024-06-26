@@ -23,6 +23,10 @@ window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 up={
