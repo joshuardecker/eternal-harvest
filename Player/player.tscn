@@ -246,7 +246,7 @@ hframes = 76
 frame = 36
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_8pghi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
