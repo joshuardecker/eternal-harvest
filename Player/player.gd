@@ -14,11 +14,15 @@ class_name Player
 # The last direction the player moved, that way the correct idle direction can be displayed.
 var last_moving_velocity: Vector2
 
+## When the player shoots.
+signal shoot
+
 func _ready():
 	pass
 
 func _physics_process(_delta: float):
 	move()
+	check_if_shoot()
 
 func move():
 	velocity = Vector2.ZERO
@@ -53,3 +57,7 @@ func move():
 		animation_tree.set("parameters/conditions/is_idling", true)
 	
 	move_and_slide()
+
+func check_if_shoot():
+	if Input.is_action_just_pressed("left_click"):
+		shoot.emit()

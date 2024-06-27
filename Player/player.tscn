@@ -1,7 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://dpe7m8fpsarqr"]
+[gd_scene load_steps=30 format=3 uid="uid://dpe7m8fpsarqr"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
 [ext_resource type="Texture2D" uid="uid://ct1axhhi2q3lp" path="res://Player/player.png" id="1_sthdr"]
+[ext_resource type="Script" path="res://Engines/health.gd" id="3_uy5c7"]
+[ext_resource type="Script" path="res://Player/GunEngine.gd" id="4_bfbtm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pghi"]
 size = Vector2(12, 18)
@@ -234,7 +236,7 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_m2abh")
 states/Walk/position = Vector2(575, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_mh81u"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_n1j3q"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ujyj0")]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -259,3 +261,11 @@ parameters/conditions/is_idling = false
 parameters/conditions/is_moving = false
 parameters/Idle/blend_position = Vector2(-0.996825, 0.0108527)
 parameters/Walk/blend_position = Vector2(-0.00740743, 0.0296128)
+
+[node name="HealthEngine" type="Node2D" parent="."]
+script = ExtResource("3_uy5c7")
+health = 100.0
+heal_modifier = 10.0
+
+[node name="GunEngine" type="Node2D" parent="."]
+script = ExtResource("4_bfbtm")
