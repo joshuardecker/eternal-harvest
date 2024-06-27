@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://2xo61nxl5pvw"
-path="res://.godot/imported/Soul_Pickup.wav-114a17ec055ab017b0ecfdc2f2e60e4a.sample"
+uid="uid://dioivbtgpe3e2"
+path="res://.godot/imported/PlayerHurt.wav-f0ecd3d453c097477df8efa7d7444a39.sample"
 
 [deps]
 
-source_file="res://Music/Soul_Pickup.wav"
-dest_files=["res://.godot/imported/Soul_Pickup.wav-114a17ec055ab017b0ecfdc2f2e60e4a.sample"]
+source_file="res://Music/PlayerHurt.wav"
+dest_files=["res://.godot/imported/PlayerHurt.wav-f0ecd3d453c097477df8efa7d7444a39.sample"]
 
 [params]
 
