@@ -9,6 +9,11 @@ class_name Player
 ## Pixels per second the player moves.
 @export var speed: float = 100
 
+@onready var animation_tree = $AnimationTree
+
+# The last direction the player moved, that way the correct idle direction can be displayed.
+var last_moving_velocity: Vector2
+
 func _ready():
 	pass
 
@@ -33,5 +38,18 @@ func move():
 	# just going right, so the player would move faster.
 	# .normalized() makes the length always 1.
 	velocity = velocity.normalized() * speed
+	
+	if velocity != Vector2.ZERO:
+		animation_tree.set("parameters/Walk/blend_position", velocity)
+		animation_tree.set("parameters/conditions/is_moving", true)
+		animation_tree.set("parameters/conditions/is_idling", false)
 		
+		# Shouldnt be zero since its last direction the player moved.
+		# Zero is not a direction to move to.
+		last_moving_velocity = velocity
+	else:
+		animation_tree.set("parameters/Idle/blend_position", last_moving_velocity)
+		animation_tree.set("parameters/conditions/is_moving", false)
+		animation_tree.set("parameters/conditions/is_idling", true)
+	
 	move_and_slide()
