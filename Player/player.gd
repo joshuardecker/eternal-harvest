@@ -16,6 +16,8 @@ var last_moving_velocity: Vector2
 
 ## When the player shoots.
 signal shoot
+## When the player dies.
+signal is_dead
 
 func _ready():
 	pass
