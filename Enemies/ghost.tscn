@@ -100,7 +100,7 @@ libraries = {
 
 [node name="HealthEngine" type="Node2D" parent="."]
 script = ExtResource("3_maugh")
-health = 20.0
+health = 100.0
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
