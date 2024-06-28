@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://unlfm8yeette"]
+[gd_scene load_steps=12 format=3 uid="uid://unlfm8yeette"]
 
 [ext_resource type="Texture2D" uid="uid://bgi257war8mdu" path="res://World/GrassTile.png" id="2_e8o7a"]
 [ext_resource type="Texture2D" uid="uid://b7u6ewkrk2em4" path="res://World/PathTile.png" id="2_glxpb"]
 [ext_resource type="Texture2D" uid="uid://5fkrt0wt4rhs" path="res://World/CliffTile.png" id="3_xanhp"]
 [ext_resource type="PackedScene" uid="uid://bv6vyl8ywws52" path="res://World/spruce_tree.tscn" id="4_h6i5t"]
 [ext_resource type="PackedScene" uid="uid://dpe7m8fpsarqr" path="res://Player/player.tscn" id="4_k4mgx"]
+[ext_resource type="PackedScene" uid="uid://jj53cenwludu" path="res://Enemies/ghost.tscn" id="6_knlok"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_egy63"]
 
@@ -1054,3 +1055,6 @@ position = Vector2(189, 51)
 
 [node name="Player" parent="." instance=ExtResource("4_k4mgx")]
 position = Vector2(144, 66)
+
+[node name="ghost" parent="." instance=ExtResource("6_knlok")]
+position = Vector2(163, 141)
