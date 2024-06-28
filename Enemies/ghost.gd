@@ -10,6 +10,7 @@ class_name Ghost
 @export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
 
 @onready var animation_player = $AnimationPlayer
+@onready var hitbox_shape = $Hitbox/CollisionShape
 
 var player: Player
 
@@ -29,20 +30,26 @@ func _physics_process(_delta):
 	move()
 
 func despawn():
-	# TODO: properly handle despawning
-	print("I need to despawn!")
+	queue_free()
 
 func fancy_death():
 	# The death animation automatically calls despawn after its finished.
 	animation_player.play("death")
+	
+	# When the ghost is dead but playing the death animation, make it so it 
+	# cant hurt the player.
+	hitbox_shape.disabled = true
+	
 	drop_items()
 
 func drop_items():
-	# TODO: add actual drops
-	print("I dropped something!")
+	print("I need to drop items!")
 
 func _on_health_engine_is_dead():
-	despawn()
+	# Always use call deferred when calling a death func.
+	# It guarantees it only runs once when the game engine is ready for it.
+	# No errors, no nothing.
+	call_deferred("fancy_death")
 	
 func move():
 	match movement_type:
