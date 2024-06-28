@@ -20,9 +20,6 @@ func _ready():
 	timer.autostart = false
 	timer.one_shot = false
 	timer.connect("timeout", spawn_wave)
-	
-	#TODO: remove when a game manager is added
-	start()
 
 func start():
 	timer.start(wave_time_length)
