@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://unlfm8yeette"]
 
+[ext_resource type="Script" path="res://World/GameManager.gd" id="1_ndjup"]
 [ext_resource type="Texture2D" uid="uid://bgi257war8mdu" path="res://World/GrassTile.png" id="2_e8o7a"]
 [ext_resource type="Texture2D" uid="uid://b7u6ewkrk2em4" path="res://World/PathTile.png" id="2_glxpb"]
 [ext_resource type="Texture2D" uid="uid://5fkrt0wt4rhs" path="res://World/CliffTile.png" id="3_xanhp"]
 [ext_resource type="PackedScene" uid="uid://bv6vyl8ywws52" path="res://World/spruce_tree.tscn" id="4_h6i5t"]
-[ext_resource type="PackedScene" uid="uid://dpe7m8fpsarqr" path="res://Player/player.tscn" id="4_k4mgx"]
-[ext_resource type="Script" path="res://Enemies/ghost_spawner.gd" id="6_mbw2g"]
+[ext_resource type="PackedScene" uid="uid://df3s6cwpnlxn8" path="res://Enemies/ghost_spawner.tscn" id="6_r0ku2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_egy63"]
 
@@ -1045,6 +1045,9 @@ sources/4 = SubResource("TileSetAtlasSource_d5vr8")
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("1_ndjup")
+
 [node name="GroundTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_wlpwl")
 format = 2
@@ -1053,13 +1056,9 @@ layer_0/tile_data = PackedInt32Array(917530, 0, 0, 851994, 0, 0, 786458, 196608,
 [node name="SpruceTree" parent="." instance=ExtResource("4_h6i5t")]
 position = Vector2(189, 51)
 
-[node name="Player" parent="." instance=ExtResource("4_k4mgx")]
-position = Vector2(144, 66)
+[node name="GhostSpawner" parent="." instance=ExtResource("6_r0ku2")]
+position = Vector2(225, 129)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0.0605303, 0.0605303, 0.0605303, 1)
-
-[node name="GhostSpawner" type="Node2D" parent="."]
-position = Vector2(219, 127)
-script = ExtResource("6_mbw2g")
