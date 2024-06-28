@@ -21,6 +21,8 @@ signal is_done_healing
 # The initial health becomes the max health.
 var max_health: float
 
+# A timer to keep track of how long this engine heals itself.
+# Isnt doing anything when its not healing.
 var heal_timer = Timer.new()
 
 # Every health component will look for a hitbox to connect to.
@@ -38,10 +40,13 @@ func _ready():
 	if not hitbox:
 		push_error(parent, " does not have a hitbox and needs one!")
 		
+	# When something enters the hitbox, it may be another hitbox attempting
+	# to damage it. So the health engine connects these funcs.
 	hitbox.connect("area_entered", take_damage)
 	
 	max_health = health
 	
+	# Simple scene setup for the timer.
 	add_child(heal_timer)
 	
 	heal_timer.autostart = false

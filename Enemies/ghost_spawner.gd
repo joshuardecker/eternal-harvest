@@ -22,13 +22,14 @@ func _ready():
 	timer.connect("timeout", spawn_wave)
 
 func start():
+	# When the timer starts, waves start.
 	timer.start(wave_time_length)
 
 func stop():
+	# When the timer stops, no more waves spawn.
 	timer.stop()
 
 func spawn_wave():
 	var new_ghost: Ghost = ghost.instantiate()
-	
 	new_ghost.global_position = self.global_position
 	get_tree().root.add_child(new_ghost)

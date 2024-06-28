@@ -33,8 +33,10 @@ func _ready():
 	player.connect("shoot", shoot_single_bullet)
 	
 func shoot_single_bullet():
+	# Makes the bullet travel towards the mouse (at the time of clicking).
 	var target = player.global_position.direction_to(get_global_mouse_position())
 	
+	# Spawn the bullet and add it to the scene.
 	var new_bullet: Bullet = bullet.instantiate()
 	
 	new_bullet.global_position = player.global_position
@@ -42,4 +44,6 @@ func shoot_single_bullet():
 	
 	get_tree().root.add_child(new_bullet)
 	
+	# Finally set the calculated target to the bullet.
+	# Not all on one line to make easier to read.
 	new_bullet.target_direction = target

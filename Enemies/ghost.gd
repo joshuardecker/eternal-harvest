@@ -30,8 +30,8 @@ func _ready():
 	
 	animation_player.play("idle")
 	
+	# Load a local instance of the hud.
 	var hud = get_tree().get_first_node_in_group("HUD")
-	
 	if not hud:
 		push_error("This ghost tried to load the hud and it couldnt!")
 	
@@ -74,8 +74,8 @@ func move():
 		_:
 			push_error("This ghost is using a movement engine that doesnt exist!")
 
+# Moves the ghost directly toward the players current position.
 func move_simply():
 	var target_position = self.global_position.direction_to(player.global_position)
-	
 	velocity = target_position * speed
 	move_and_slide()
