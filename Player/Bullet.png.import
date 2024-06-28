@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://botq1p732jepc"
-path="res://.godot/imported/jacko_crow_1.png-94d66b87068ae0df49446713887bf97c.ctex"
+uid="uid://dek80idawkcwx"
+path="res://.godot/imported/Bullet.png-57442ea84c636bce145c26610d4e0114.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/jacko_crow_1.png"
-dest_files=["res://.godot/imported/jacko_crow_1.png-94d66b87068ae0df49446713887bf97c.ctex"]
+source_file="res://Player/Bullet.png"
+dest_files=["res://.godot/imported/Bullet.png-57442ea84c636bce145c26610d4e0114.ctex"]
 
 [params]
 

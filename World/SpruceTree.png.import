@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c40bgjvnrx3d1"
-path="res://.godot/imported/pumpkin.png-f8413c71fd6c7d3c54dde383e6f68dd4.ctex"
+uid="uid://cjt38ocmwbn1k"
+path="res://.godot/imported/SpruceTree.png-cefff6330ec3f0606606818239394e08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/pumpkin.png"
-dest_files=["res://.godot/imported/pumpkin.png-f8413c71fd6c7d3c54dde383e6f68dd4.ctex"]
+source_file="res://World/SpruceTree.png"
+dest_files=["res://.godot/imported/SpruceTree.png-cefff6330ec3f0606606818239394e08.ctex"]
 
 [params]
 

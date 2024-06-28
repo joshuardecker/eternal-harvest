@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjt38ocmwbn1k"
-path="res://.godot/imported/spruce-tree.png-5a423d0803ae6c4ac27244fe585c7435.ctex"
+uid="uid://ct1axhhi2q3lp"
+path="res://.godot/imported/Player.png-3d0801c65bdfc563657cfa304115f1c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/spruce-tree.png"
-dest_files=["res://.godot/imported/spruce-tree.png-5a423d0803ae6c4ac27244fe585c7435.ctex"]
+source_file="res://Player/Player.png"
+dest_files=["res://.godot/imported/Player.png-3d0801c65bdfc563657cfa304115f1c7.ctex"]
 
 [params]
 
@@ -25,7 +25,7 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false

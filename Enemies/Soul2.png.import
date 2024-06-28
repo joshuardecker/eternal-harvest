@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p1niefnfqnp7"
-path="res://.godot/imported/jacko_crow_2.png-1b1923224284b9679e1f7769637aed00.ctex"
+uid="uid://b6akn2u4su1fx"
+path="res://.godot/imported/Soul2.png-a85a3b34ff1842aa36ed95289c219d01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/jacko_crow_2.png"
-dest_files=["res://.godot/imported/jacko_crow_2.png-1b1923224284b9679e1f7769637aed00.ctex"]
+source_file="res://Enemies/Soul2.png"
+dest_files=["res://.godot/imported/Soul2.png-a85a3b34ff1842aa36ed95289c219d01.ctex"]
 
 [params]
 

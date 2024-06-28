@@ -1,9 +1,9 @@
 [gd_scene load_steps=30 format=3 uid="uid://dpe7m8fpsarqr"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
-[ext_resource type="Texture2D" uid="uid://ct1axhhi2q3lp" path="res://Player/player.png" id="1_sthdr"]
+[ext_resource type="Texture2D" uid="uid://ct1axhhi2q3lp" path="res://Player/Player.png" id="2_dsuvu"]
 [ext_resource type="Script" path="res://Engines/health.gd" id="3_uy5c7"]
-[ext_resource type="Script" path="res://Player/GunEngine.gd" id="4_bfbtm"]
+[ext_resource type="Script" path="res://Player/gun_engine.gd" id="4_1v6bh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pghi"]
 size = Vector2(12, 18)
@@ -241,7 +241,7 @@ script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
-texture = ExtResource("1_sthdr")
+texture = ExtResource("2_dsuvu")
 hframes = 76
 frame = 36
 
@@ -268,4 +268,4 @@ health = 100.0
 heal_modifier = 10.0
 
 [node name="GunEngine" type="Node2D" parent="."]
-script = ExtResource("4_bfbtm")
+script = ExtResource("4_1v6bh")

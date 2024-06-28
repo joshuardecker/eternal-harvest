@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cinquixtjngq2"
-path="res://.godot/imported/Scarecrow_Totem.png-6858e0f1790ccde3a76d9eee8736216f.ctex"
+uid="uid://b1fhjq41051jt"
+path="res://.godot/imported/Broken_heart.png-456d35605d163b77aa768b449f50d50d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Scarecrow_Totem.png"
-dest_files=["res://.godot/imported/Scarecrow_Totem.png-6858e0f1790ccde3a76d9eee8736216f.ctex"]
+source_file="res://HUD/Broken_heart.png"
+dest_files=["res://.godot/imported/Broken_heart.png-456d35605d163b77aa768b449f50d50d.ctex"]
 
 [params]
 
