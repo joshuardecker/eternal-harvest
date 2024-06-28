@@ -38,7 +38,6 @@ func shoot_single_bullet():
 	var new_bullet: Bullet = bullet.instantiate()
 	
 	new_bullet.global_position = player.global_position
-	
 	new_bullet.global_position += MAGIC_VALUE
 	
 	get_tree().root.add_child(new_bullet)
