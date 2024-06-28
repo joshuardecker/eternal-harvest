@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://dpe7m8fpsarqr"]
+[gd_scene load_steps=31 format=3 uid="uid://dpe7m8fpsarqr"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
 [ext_resource type="Texture2D" uid="uid://ct1axhhi2q3lp" path="res://Player/Player.png" id="2_dsuvu"]
 [ext_resource type="Script" path="res://Engines/health.gd" id="3_uy5c7"]
 [ext_resource type="Script" path="res://Player/gun_engine.gd" id="4_1v6bh"]
+[ext_resource type="Script" path="res://Engines/hitbox.gd" id="5_rd677"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pghi"]
 size = Vector2(12, 18)
@@ -271,3 +272,10 @@ heal_modifier = 10.0
 [node name="GunEngine" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("4_1v6bh")
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("5_rd677")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_8pghi")

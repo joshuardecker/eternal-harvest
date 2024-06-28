@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://jj53cenwludu"]
+[gd_scene load_steps=11 format=3 uid="uid://jj53cenwludu"]
 
 [ext_resource type="Texture2D" uid="uid://d2gr0md361i7y" path="res://Enemies/Ghost.png" id="1_lrgjx"]
 [ext_resource type="Script" path="res://Enemies/ghost.gd" id="1_t2ber"]
 [ext_resource type="Script" path="res://Engines/health.gd" id="3_maugh"]
+[ext_resource type="Script" path="res://Engines/hitbox.gd" id="4_ei0m8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wy2y6"]
 size = Vector2(13, 7.5)
@@ -76,6 +77,9 @@ _data = {
 "idle": SubResource("Animation_svcig")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_47wh5"]
+size = Vector2(13, 23)
+
 [node name="ghost" type="CharacterBody2D"]
 script = ExtResource("1_t2ber")
 
@@ -97,5 +101,12 @@ libraries = {
 [node name="HealthEngine" type="Node2D" parent="."]
 script = ExtResource("3_maugh")
 health = 30.0
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("4_ei0m8")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-0.5, -11.5)
+shape = SubResource("RectangleShape2D_47wh5")
 
 [connection signal="is_dead" from="HealthEngine" to="." method="_on_health_engine_is_dead"]
