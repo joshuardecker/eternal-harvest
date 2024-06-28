@@ -38,7 +38,7 @@ func _ready():
 	if not hitbox:
 		push_error(parent, " does not have a hitbox and needs one!")
 		
-	# TODO: connect signals of the hitbox to the health component
+	hitbox.connect("area_entered", take_damage)
 	
 	max_health = health
 	
@@ -54,8 +54,13 @@ func _physics_process(delta):
 	if !heal_timer.is_stopped():
 		heal(max_health * (heal_modifier / 100) * delta)
 
-func take_damage(amount: float):
-	health -= amount * (1 - (armor / 100))
+func take_damage(area: Area2D):
+	# If the area is not a hitbox.
+	if not (area is Hitbox):
+		return
+	
+	# Area is known to be a hitbox, so the damage field exists.
+	health -= area.damage * (1 - (armor / 100))
 	
 	if health <= 0:
 		is_dead.emit()
