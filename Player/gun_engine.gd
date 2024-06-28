@@ -8,6 +8,13 @@ class_name GunEngine
 @export var speed: float = 200
 @export var damage: float = 40
 
+@onready var bullet: PackedScene = load("res://Player/bullet.tscn")
+
+# Normally the bullet will spawn at the base of the player.
+# This is not where the gun is, so lets move the bullet up by an arbitrary
+# magic value.
+const MAGIC_VALUE = Vector2(0, -8)
+
 ## The direction the bullet will travel. 
 ## Note: this should be normalized (length of 1).
 var direction_vec: Vector2
@@ -26,5 +33,14 @@ func _ready():
 	player.connect("shoot", shoot_single_bullet)
 	
 func shoot_single_bullet():
-	# TODO: spawn the bullet and shoot
-	print("Pretend the player is shooting!")
+	var target = player.global_position.direction_to(get_global_mouse_position())
+	
+	var new_bullet: Bullet = bullet.instantiate()
+	
+	new_bullet.global_position = player.global_position
+	
+	new_bullet.global_position += MAGIC_VALUE
+	
+	get_tree().root.add_child(new_bullet)
+	
+	new_bullet.target_direction = target
