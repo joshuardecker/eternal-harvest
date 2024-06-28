@@ -23,7 +23,23 @@ var max_health: float
 
 var heal_timer = Timer.new()
 
+# Every health component will look for a hitbox to connect to.
+var hitbox: Hitbox = null
+
 func _ready():
+	var parent = get_parent()
+	
+	# Loop through the siblings to see if there is a hitbox.
+	for child in parent.get_children():
+		if child is Hitbox:
+			hitbox = child
+	
+	# If the hitbox is not found.
+	if not hitbox:
+		push_error(parent, " does not have a hitbox and needs one!")
+		
+	# TODO: connect signals of the hitbox to the health component
+	
 	max_health = health
 	
 	add_child(heal_timer)
