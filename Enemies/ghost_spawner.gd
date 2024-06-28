@@ -10,7 +10,7 @@ class_name GhostSpawner
 ## Useful for things like the HUD that keep track of this.
 signal next_wave_started
 
-var timer: Timer = Timer.new()
+var timer = Timer.new()
 
 var ghost: PackedScene = load("res://Enemies/ghost.tscn")
 
