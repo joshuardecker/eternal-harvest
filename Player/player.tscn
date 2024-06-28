@@ -240,13 +240,13 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -12)
 texture = ExtResource("2_dsuvu")
 hframes = 76
 frame = 36
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_8pghi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -263,9 +263,11 @@ parameters/Idle/blend_position = Vector2(-0.996825, 0.0108527)
 parameters/Walk/blend_position = Vector2(-0.00740743, 0.0296128)
 
 [node name="HealthEngine" type="Node2D" parent="."]
+position = Vector2(0, -4)
 script = ExtResource("3_uy5c7")
 health = 100.0
 heal_modifier = 10.0
 
 [node name="GunEngine" type="Node2D" parent="."]
+position = Vector2(0, -4)
 script = ExtResource("4_1v6bh")
