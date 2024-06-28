@@ -12,6 +12,9 @@ class_name Ghost
 @onready var animation_player = $AnimationPlayer
 @onready var hitbox_shape = $Hitbox/CollisionShape
 
+# Kind of redundant, but this exists so I can link this signal to the game manager.
+signal dead
+
 var player: Player
 
 func _ready():
@@ -20,11 +23,20 @@ func _ready():
 	# If the player does not exist, just despawn.
 	if not player:
 		despawn()
+		return
 		
 	# When the player dies, despawn the ghost.
 	player.connect("is_dead", despawn)
 	
 	animation_player.play("idle")
+	
+	var hud = get_tree().get_first_node_in_group("HUD")
+	
+	if not hud:
+		push_error("This ghost tried to load the hud and it couldnt!")
+	
+	# When the ghost dies, tell the hud to add one to the kill counter.
+	connect("dead", hud.update_kill_amount)
 
 func _physics_process(_delta):
 	move()
@@ -33,6 +45,8 @@ func despawn():
 	queue_free()
 
 func fancy_death():
+	dead.emit()
+	
 	# The death animation automatically calls despawn after its finished.
 	animation_player.play("death")
 	
