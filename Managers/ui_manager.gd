@@ -11,8 +11,8 @@ class_name UIManager
 var main_menu_scene: PackedScene = load("res://UI/main_menu.tscn")
 var main_menu: MainMenu
 
-@onready var settings_menu_scene: PackedScene = load("") # TODO: when settings is made, add here
-var settings_menu: Node # TODO: fix as well
+@onready var settings_menu_scene: PackedScene = load("res://UI/settings_menu.tscn")
+var settings_menu: SettingsMenu
 
 @onready var hud_scene: PackedScene = load("res://UI/hud.tscn")
 var hud: HUD
@@ -36,6 +36,7 @@ func load_main_menu():
 	
 	# Connects the main menu buttons to their functions.
 	main_menu.connect("start", game_manager.start_game)
+	main_menu.connect("settings", load_settings_menu)
 	main_menu.connect("exit", game_manager.quit_game)
 	
 func unload_main_menu():
@@ -43,10 +44,23 @@ func unload_main_menu():
 	main_menu.queue_free()
 	
 func load_settings_menu():
-	pass
+	# Since the settings menu comes from the main menu, deal with that here.
+	unload_main_menu()
+	
+	settings_menu = settings_menu_scene.instantiate()
+	get_tree().root.add_child(settings_menu)
+	
+	# Connect useful settings functions.
+	settings_menu.connect("fullscreen", game_manager.change_fullscreen)
+	settings_menu.connect("vsync_mode", game_manager.change_vsync_mode)
+	settings_menu.connect("back", unload_settings_menu)
 	
 func unload_settings_menu():
-	pass
+	get_tree().root.remove_child(settings_menu)
+	settings_menu.queue_free()
+	
+	# Go back to the main menu.
+	load_main_menu()
 	
 func load_hud():
 	hud = hud_scene.instantiate()

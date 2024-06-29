@@ -36,4 +36,5 @@ theme_override_fonts/font = ExtResource("2_3vgl8")
 text = "Exit"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -77,3 +77,15 @@ func stop_game():
 
 func quit_game():
 	get_tree().quit()
+	
+# TODO: move to the settings manager
+func change_fullscreen(enabled: bool):
+	if enabled:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		
+# TODO: move to settings manager
+# The settings menu automatically sends the correct mode as an int.
+func change_vsync_mode(mode: int):
+	DisplayServer.window_set_vsync_mode(mode)
