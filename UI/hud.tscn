@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://criud4mjonr57"]
 
 [ext_resource type="FontFile" uid="uid://cvh6d11sybw7w" path="res://Fonts/Halloween.ttf" id="1_ct374"]
-[ext_resource type="Script" path="res://HUD/hud.gd" id="1_ttt36"]
+[ext_resource type="Script" path="res://UI/hud.gd" id="1_ttt36"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_r4ijt"]
 font = ExtResource("1_ct374")

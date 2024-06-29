@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1fhjq41051jt"
-path="res://.godot/imported/Broken_heart.png-456d35605d163b77aa768b449f50d50d.ctex"
+path="res://.godot/imported/Broken_heart.png-fc87ccd5457425f8c6df3fd28d351805.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HUD/Broken_heart.png"
-dest_files=["res://.godot/imported/Broken_heart.png-456d35605d163b77aa768b449f50d50d.ctex"]
+source_file="res://UI/Broken_heart.png"
+dest_files=["res://.godot/imported/Broken_heart.png-fc87ccd5457425f8c6df3fd28d351805.ctex"]
 
 [params]
 
