@@ -10,6 +10,8 @@ signal back
 @onready var vsync_button = $CenterContainer2/VBoxContainer/VSync
 @onready var back_button = $CenterContainer2/VBoxContainer/Back
 
+#TODO: when the settings manager is added, have the settings menu connect signals there itself.
+
 func _on_fullscreen_pressed():
 	if fullscreen_button.button_pressed:
 		fullscreen.emit(true)
