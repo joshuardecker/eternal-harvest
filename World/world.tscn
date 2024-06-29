@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://unlfm8yeette"]
 
-[ext_resource type="Script" path="res://World/GameManager.gd" id="1_ndjup"]
+[ext_resource type="PackedScene" uid="uid://bodh7tmqnsy7g" path="res://Managers/game_manager.tscn" id="1_bed3s"]
 [ext_resource type="Texture2D" uid="uid://bgi257war8mdu" path="res://World/GrassTile.png" id="2_e8o7a"]
 [ext_resource type="Texture2D" uid="uid://b7u6ewkrk2em4" path="res://World/PathTile.png" id="2_glxpb"]
 [ext_resource type="Texture2D" uid="uid://5fkrt0wt4rhs" path="res://World/CliffTile.png" id="3_xanhp"]
@@ -1045,8 +1045,7 @@ sources/4 = SubResource("TileSetAtlasSource_d5vr8")
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
-[node name="GameManager" type="Node2D" parent="."]
-script = ExtResource("1_ndjup")
+[node name="GameManager" parent="." instance=ExtResource("1_bed3s")]
 
 [node name="GroundTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_wlpwl")
