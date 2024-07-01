@@ -16,7 +16,7 @@ class_name HealthEngine
 signal is_dead
 signal took_damage(new_health: float)
 signal is_healing
-signal is_done_healing
+signal is_done_healing(new_health: float)
 
 # The initial health becomes the max health.
 var max_health: float
@@ -83,4 +83,4 @@ func start_healing(duration: float):
 	is_healing.emit()
 
 func done_healing():
-	is_done_healing.emit()
+	is_done_healing.emit(health)
