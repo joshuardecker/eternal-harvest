@@ -282,3 +282,5 @@ damage = 20.0
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_8pghi")
+
+[connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]

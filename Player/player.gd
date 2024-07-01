@@ -11,11 +11,15 @@ class_name Player
 
 @onready var animation_tree = $AnimationTree
 
+# Engines:
+@onready var health_engine = $HealthEngine
+
 # The last direction the player moved, that way the correct idle direction can be displayed.
 var last_moving_velocity: Vector2
 
 ## When the player shoots.
 signal shoot
+signal took_damage(health_now: float)
 ## When the player dies.
 signal is_dead
 
@@ -63,3 +67,15 @@ func move():
 func check_if_shoot():
 	if Input.is_action_just_pressed("left_click"):
 		shoot.emit()
+
+func _on_health_engine_took_damage(new_health: float):
+	update_hud_health(new_health)
+
+func update_hud_health(new_health: float):
+	var hud: HUD = get_tree().get_first_node_in_group("HUD")
+	
+	# If the hud was not loaded.
+	if not hud:
+		push_error("The player can not load the hud!")
+		
+	hud.update_player_health(new_health)
