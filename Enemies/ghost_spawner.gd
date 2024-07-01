@@ -4,7 +4,7 @@ extends Node2D
 class_name GhostSpawner
 
 ## The time between spawning new waves
-@export var wave_time_length: float = 20
+@export var wave_time_length: float = 5
 
 ## When a new wave starts, this sends out a signal.
 ## Useful for things like the HUD that keep track of this.
@@ -15,6 +15,7 @@ var timer = Timer.new()
 var ghost: PackedScene = load("res://Enemies/ghost.tscn")
 
 func _ready():
+	# All stuff that sets up the timer:
 	add_child(timer)
 	
 	timer.autostart = false
@@ -33,3 +34,5 @@ func spawn_wave():
 	var new_ghost: Ghost = ghost.instantiate()
 	new_ghost.global_position = self.global_position
 	get_tree().root.add_child(new_ghost)
+	
+	next_wave_started.emit()
