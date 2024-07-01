@@ -1061,3 +1061,5 @@ position = Vector2(225, 129)
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0.0605303, 0.0605303, 0.0605303, 1)
+
+[node name="UILayer" type="CanvasLayer" parent="." groups=["UILayer"]]
