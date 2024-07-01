@@ -30,9 +30,28 @@ func _ready():
 	if not game_manager:
 		push_error("The UI manager could not find the GameManager!")
 
+func push_to_canvas(ui):
+	var ui_layer: CanvasLayer = get_tree().get_first_node_in_group("UILayer")
+	
+	if not ui_layer:
+		push_error("UI manager could not find the UILayer!")
+		
+	ui_layer.add_child(ui)
+
+func remove_from_canvas(ui):
+	var ui_layer: CanvasLayer = get_tree().get_first_node_in_group("UILayer")
+	
+	if not ui_layer:
+		push_error("UI manager could not find the UILayer!")
+		
+	for child in ui_layer.get_children():
+		if child == ui:
+			ui_layer.remove_child(child)
+			child.queue_free()
+
 func load_main_menu():
 	main_menu = main_menu_scene.instantiate()
-	get_tree().root.add_child(main_menu)
+	push_to_canvas(main_menu)
 	
 	# Connects the main menu buttons to their functions.
 	main_menu.connect("start", game_manager.start_game)
@@ -40,15 +59,14 @@ func load_main_menu():
 	main_menu.connect("exit", game_manager.quit_game)
 	
 func unload_main_menu():
-	get_tree().root.remove_child(main_menu)
-	main_menu.queue_free()
+	remove_from_canvas(main_menu)
 	
 func load_settings_menu():
 	# Since the settings menu comes from the main menu, deal with that here.
 	unload_main_menu()
 	
 	settings_menu = settings_menu_scene.instantiate()
-	get_tree().root.add_child(settings_menu)
+	push_to_canvas(settings_menu)
 	
 	# Connect useful settings functions.
 	settings_menu.connect("fullscreen", game_manager.change_fullscreen)
@@ -56,16 +74,14 @@ func load_settings_menu():
 	settings_menu.connect("back", unload_settings_menu)
 	
 func unload_settings_menu():
-	get_tree().root.remove_child(settings_menu)
-	settings_menu.queue_free()
+	remove_from_canvas(settings_menu)
 	
 	# Go back to the main menu.
 	load_main_menu()
 	
 func load_hud():
 	hud = hud_scene.instantiate()
-	get_tree().root.add_child(hud)
+	push_to_canvas(hud)
 	
 func unload_hud():
-	get_tree().root.remove_child(hud)
-	hud.queue_free()
+	remove_from_canvas(hud)
