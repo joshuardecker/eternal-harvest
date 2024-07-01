@@ -14,7 +14,7 @@ class_name HealthEngine
 @export_range(1, 100) var heal_modifier: float
 
 signal is_dead
-signal just_healed
+signal took_damage(new_health: float)
 signal is_healing
 signal is_done_healing
 
@@ -69,11 +69,13 @@ func take_damage(area: Area2D):
 	
 	if health <= 0:
 		is_dead.emit()
+	else:
+		took_damage.emit(health)
 	
 func heal(amount: float):
 	health += amount
 	
-	just_healed.emit()
+	is_healing.emit()
 
 func start_healing(duration: float):
 	heal_timer.start(duration)
