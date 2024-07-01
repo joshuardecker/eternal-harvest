@@ -283,4 +283,6 @@ damage = 20.0
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_8pghi")
 
+[node name="Camera" type="Camera2D" parent="."]
+
 [connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]
