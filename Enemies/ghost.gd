@@ -11,6 +11,7 @@ class_name Ghost
 
 @onready var animation_player = $AnimationPlayer
 @onready var hitbox_shape = $Hitbox/CollisionShape
+@onready var ghost_ai: GhostAI = $GhostAI
 
 # Kind of redundant, but this exists so I can link this signal to the game manager.
 signal dead
@@ -68,14 +69,23 @@ func _on_health_engine_is_dead():
 func move():
 	match movement_type:
 		"simple_movement":
-			move_simply()
+			simple_movement()
 		"ai_movement":
-			pass
+			ai_movement()
 		_:
 			push_error("This ghost is using a movement engine that doesnt exist!")
 
 # Moves the ghost directly toward the players current position.
-func move_simply():
+func simple_movement():
 	var target_position = self.global_position.direction_to(player.global_position)
 	velocity = target_position * speed
 	move_and_slide()
+
+# Takes the feedback from the GhostAI engine and performs the action.
+func ai_movement():
+	match ghost_ai.calculate_decision():
+		GhostAI.decision.CHASE_PLAYER:
+			# TODO: make the movement more advanced.
+			simple_movement()
+		_:
+			print("I tried to ", ghost_ai.decision)
