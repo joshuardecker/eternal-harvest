@@ -20,9 +20,9 @@ var summon_allie_weight: int
 
 # The possible actions the ghost can take according to this engine.
 enum decision {
-	chase_player,
-	attack_player,
-	summon_allie
+	CHASE_PLAYER,
+	ATTACK_PLAYER,
+	SUMMON_ALLIE
 }
 
 # Used to calculate the weight of factors that grow linearly.
@@ -42,6 +42,6 @@ func log_curve():
 	pass
 
 # Assumes that the considered factors values have been set already.
-func calculate_decision() -> decision:
+func calculate_decision() -> int:
 	# TODO: write this algorithm
-	return decision.chase_player
+	return decision.CHASE_PLAYER
