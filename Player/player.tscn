@@ -376,7 +376,7 @@ parameters/conditions/is_shooting = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.996825, 0.0108527)
 parameters/Shoot/blend_position = Vector2(0, 0)
-parameters/Walk/blend_position = Vector2(-0.00740743, 0.0296128)
+parameters/Walk/blend_position = Vector2(-0.9819, 0.00934577)
 
 [node name="HealthEngine" type="Node2D" parent="."]
 position = Vector2(0, -4)
@@ -399,5 +399,10 @@ position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_8pghi")
 
 [node name="Camera" type="Camera2D" parent="."]
+drag_horizontal_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
 
 [connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]
