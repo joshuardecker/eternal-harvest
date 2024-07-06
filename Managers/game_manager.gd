@@ -9,7 +9,7 @@ class_name GameManager
 
 @onready var player_scene: PackedScene = preload("res://Player/player.tscn")
 
-const PLAYER_STARTING_POS = Vector2(150, 60)
+const PLAYER_STARTING_POS = Vector2(155, 65)
 
 # Various managers:
 var ui_manager: UIManager
@@ -40,6 +40,7 @@ func start_game():
 	# Spawn the player.
 	player = player_scene.instantiate()
 	player.global_position = PLAYER_STARTING_POS
+	
 	get_tree().root.add_child(player)
 	
 	# Any node in the GhostSpawner group we know is a GhostSpawner class.
