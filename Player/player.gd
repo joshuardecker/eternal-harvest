@@ -26,7 +26,7 @@ signal is_dead
 func _ready():
 	pass
 
-func _physics_process(_delta: float):
+func _process(_delta):
 	move()
 	check_if_shoot()
 

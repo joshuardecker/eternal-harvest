@@ -37,7 +37,7 @@ func _ready():
 	# When the ghost dies, tell the hud to add one to the kill counter.
 	connect("dead", hud.update_kill_amount)
 
-func _physics_process(_delta):
+func _process(_delta):
 	move()
 
 func despawn():
