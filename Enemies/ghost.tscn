@@ -178,5 +178,6 @@ shape = SubResource("RectangleShape2D_47wh5")
 
 [node name="GhostAI" type="Node2D" parent="."]
 script = ExtResource("5_uh4gl")
+attack_range = 5.0
 
 [connection signal="is_dead" from="HealthEngine" to="." method="_on_health_engine_is_dead"]
