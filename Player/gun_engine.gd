@@ -53,11 +53,13 @@ func shoot_single_bullet():
 	animation_tree.set("parameters/Shoot/blend_position", target)
 	animation_tree.set("parameters/conditions/is_shooting", true)
 	
-	var timer = Timer.new()
-	timer.one_shot = true
-	add_child(timer)
-	timer.start(.55)
-	
-	await timer.timeout
+	# Manually tell the animation tree to play the shoot animation.
+	# If you try to automatically, it throws errors because recursion is 
+	# a possibility according to the compiler.
+	# Still have an is_shooting parameter because its useful information
+	# for the player to have access to.
+	animation_tree.get("parameters/playback").travel("Shoot")
+
+func can_shoot_again():
+	# No longer say the player is shooting.
 	animation_tree.set("parameters/conditions/is_shooting", false)
-	
