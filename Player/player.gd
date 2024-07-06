@@ -51,7 +51,7 @@ func move():
 	
 	if velocity != Vector2.ZERO:
 		animation_tree.set("parameters/Walk/blend_position", velocity)
-		animation_tree.set("parameters/conditions/is_moving", true)
+		animation_tree.set("parameters/conditions/is_walking", true)
 		animation_tree.set("parameters/conditions/is_idling", false)
 		
 		# Shouldnt be zero since its last direction the player moved.
@@ -59,7 +59,7 @@ func move():
 		last_moving_velocity = velocity
 	else:
 		animation_tree.set("parameters/Idle/blend_position", last_moving_velocity)
-		animation_tree.set("parameters/conditions/is_moving", false)
+		animation_tree.set("parameters/conditions/is_walking", false)
 		animation_tree.set("parameters/conditions/is_idling", true)
 	
 	move_and_slide()
@@ -67,8 +67,6 @@ func move():
 func check_if_shoot():
 	if Input.is_action_just_pressed("left_click"):
 		shoot.emit()
-		#TODO: remove
-		$AnimationPlayer.play("shoot_left")
 
 func _on_health_engine_took_damage(new_health: float):
 	update_hud_health(new_health)
