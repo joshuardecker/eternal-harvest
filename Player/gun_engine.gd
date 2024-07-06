@@ -9,6 +9,7 @@ class_name GunEngine
 @export var damage: float = 40
 
 @onready var bullet: PackedScene = load("res://Player/bullet.tscn")
+@onready var animation_tree = $"../AnimationTree"
 
 # Normally the bullet will spawn at the base of the player.
 # This is not where the gun is, so lets move the bullet up by an arbitrary
@@ -47,3 +48,16 @@ func shoot_single_bullet():
 	# Finally set the calculated target to the bullet.
 	# Not all on one line to make easier to read.
 	new_bullet.target_direction = target
+	
+	# Make the player have a shoot animation (in the correct direction).
+	animation_tree.set("parameters/Shoot/blend_position", target)
+	animation_tree.set("parameters/conditions/is_shooting", true)
+	
+	var timer = Timer.new()
+	timer.one_shot = true
+	add_child(timer)
+	timer.start(.55)
+	
+	await timer.timeout
+	animation_tree.set("parameters/conditions/is_shooting", false)
+	
