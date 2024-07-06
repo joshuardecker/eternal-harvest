@@ -27,8 +27,8 @@ func _ready():
 	pass
 
 func _process(_delta):
-	move()
 	check_if_shoot()
+	move()
 
 func move():
 	velocity = Vector2.ZERO
@@ -48,6 +48,10 @@ func move():
 	# just going right, so the player would move faster.
 	# .normalized() makes the length always 1.
 	velocity = velocity.normalized() * speed
+	
+	# If the player is shooting, dont let the player move.
+	if animation_tree.get("parameters/conditions/is_shooting"):
+		return
 	
 	if velocity != Vector2.ZERO:
 		animation_tree.set("parameters/Walk/blend_position", velocity)
