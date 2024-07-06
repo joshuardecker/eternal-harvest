@@ -67,6 +67,8 @@ func move():
 func check_if_shoot():
 	if Input.is_action_just_pressed("left_click"):
 		shoot.emit()
+		#TODO: remove
+		$AnimationPlayer.play("shoot_left")
 
 func _on_health_engine_took_damage(new_health: float):
 	update_hud_health(new_health)
