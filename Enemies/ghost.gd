@@ -9,7 +9,7 @@ class_name Ghost
 @export var speed: float = 20
 @export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
 
-@onready var animation_player = $AnimationPlayer
+@onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
 @onready var ghost_ai: GhostAI = $GhostAI
 
@@ -29,8 +29,6 @@ func _ready():
 	# When the player dies, despawn the ghost.
 	player.connect("is_dead", despawn)
 	
-	animation_player.play("idle")
-	
 	# Load a local instance of the hud.
 	var hud = get_tree().get_first_node_in_group("HUD")
 	if not hud:
@@ -48,14 +46,15 @@ func despawn():
 func fancy_death():
 	dead.emit()
 	
-	# The death animation automatically calls despawn after its finished.
-	animation_player.play("death")
+	# TODO: fancy death animation.
 	
 	# When the ghost is dead but playing the death animation, make it so it 
 	# cant hurt the player.
 	hitbox_shape.disabled = true
 	
 	drop_items()
+	
+	despawn()
 
 func drop_items():
 	print("I need to drop items!")
@@ -80,6 +79,9 @@ func simple_movement():
 	var target_position = self.global_position.direction_to(player.global_position)
 	velocity = target_position * speed
 	move_and_slide()
+	
+	# Update the animation player to make the ghost face the correct direction.
+	animation_tree.set("parameters/Move/blend_position", velocity)
 
 # Takes the feedback from the GhostAI engine and performs the action.
 func ai_movement():
