@@ -376,7 +376,7 @@ parameters/conditions/is_shooting = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.996825, 0.0108527)
 parameters/Shoot/blend_position = Vector2(0, 0)
-parameters/Walk/blend_position = Vector2(-0.9819, 0.00934577)
+parameters/Walk/blend_position = Vector2(-0.187783, -0.0520834)
 
 [node name="HealthEngine" type="Node2D" parent="."]
 position = Vector2(0, -4)
