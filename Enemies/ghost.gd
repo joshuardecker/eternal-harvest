@@ -60,8 +60,16 @@ func _ready():
 func _process(delta: float):
 	move(delta)
 
+# Loads ther entity manager, that way the ghost can despawn.
+# Despawning any entity must go through the entity manager.
+# Since this ghost is already spawned, we know the entity
+# manager exists.
+func load_entity_manager() -> EntityManager:
+	return get_tree().get_first_node_in_group("EntityManager")
+
 func despawn():
-	queue_free()
+	var entity_manager = load_entity_manager()
+	entity_manager.despawn_ghost(self)
 
 func fancy_death():
 	dead.emit()
@@ -105,7 +113,7 @@ func move(delta: float):
 
 # Moves the ghost directly toward the players current position.
 func simple_movement():
-	var target_position = self.global_position.direction_to(player.global_position)
+	var target_position = global_position.direction_to(player.global_position)
 	velocity = target_position * speed
 	move_and_slide()
 	
