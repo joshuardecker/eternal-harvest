@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://jj53cenwludu"]
+[gd_scene load_steps=25 format=3 uid="uid://jj53cenwludu"]
 
 [ext_resource type="Script" path="res://Enemies/ghost.gd" id="1_t2ber"]
 [ext_resource type="Texture2D" uid="uid://yaao46wfc6ej" path="res://Enemies/Assets/ghost.png" id="2_w0xbk"]
 [ext_resource type="Script" path="res://Engines/health.gd" id="3_maugh"]
 [ext_resource type="Texture2D" uid="uid://bvdbo2n14i5aj" path="res://Enemies/Assets/ghost-death.png" id="3_p3eig"]
+[ext_resource type="Texture2D" uid="uid://qhvc5fo5l65t" path="res://Enemies/Assets/ghost-summon.png" id="4_255pj"]
 [ext_resource type="Script" path="res://Engines/hitbox.gd" id="4_ei0m8"]
 [ext_resource type="Script" path="res://Enemies/ghost_ai.gd" id="5_uh4gl"]
 
@@ -31,6 +32,18 @@ tracks/1/path = NodePath("DeathSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SummonSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -135,6 +148,23 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_qc8n8"]
+resource_name = "summon"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SummonSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h68lo"]
 _data = {
 "RESET": SubResource("Animation_5fq2s"),
@@ -142,7 +172,8 @@ _data = {
 "move_down": SubResource("Animation_qkjou"),
 "move_left": SubResource("Animation_1nmar"),
 "move_right": SubResource("Animation_26ibb"),
-"move_up": SubResource("Animation_6qi00")
+"move_up": SubResource("Animation_6qi00"),
+"summon": SubResource("Animation_qc8n8")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x77rg"]
@@ -195,6 +226,12 @@ visible = false
 position = Vector2(0, -8)
 texture = ExtResource("3_p3eig")
 hframes = 5
+
+[node name="SummonSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("4_255pj")
+hframes = 4
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 visible = false
