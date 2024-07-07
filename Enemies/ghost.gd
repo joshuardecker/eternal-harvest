@@ -12,12 +12,18 @@ signal dead
 
 @export var speed: float = 20
 @export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
+## How long it will take the ghost to summon an allie in seconds.
+@export var summon_time: float = 5
+## How often in seconds the AI engine should make a new decision on what to do.
+@export var ai_decision_time_freq: float = 1
 
-# Used to directly call the death animation,
-# otherwise use the Animation tree.
+# Use the animation tree to manipulate the ghost sprite.
+# This animation player should only be used to mess with the other sprites that
+# dont care about the ghosts movement state.
 @onready var animation_player = $AnimationPlayer
 @onready var ghost_sprite = $GhostSprite
 @onready var death_sprite = $DeathSprite
+@onready var summon_sprite = $SummonSprite
 
 @onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
@@ -27,8 +33,10 @@ var player: Player
 
 # How long in seconds since the AIEngine made a new decision on what to do.
 var last_ai_decision_time: float
-## How often in seconds the AI engine should make a new decision on what to do.
-@export var ai_decision_time_freq: float = 1
+# Keeps track if this ghost has already summoned an allie.
+# Ghosts can only summon one, so this is useful to make sure
+# multiple arnt summoned.
+var has_summoned_allie: bool = false
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")
@@ -60,6 +68,12 @@ func fancy_death():
 	
 	# Hide the ghost sprite so the death sprite can replace it.
 	ghost_sprite.hide()
+	
+	# Also make sure the summoning animation isnt playing.
+	# NOTE: this doesnt stop the summoning ability from continuing,
+	# so it is possible for a ghost to be summoned while this ghost is in
+	# the death animation.
+	summon_sprite.hide()
 	
 	# despawn() is called when death animation finishes.
 	animation_player.play("death")
@@ -116,5 +130,40 @@ func ai_movement(delta: float):
 		GhostAI.decision.CHASE_PLAYER:
 			# TODO: make the movement more advanced.
 			simple_movement()
+		GhostAI.decision.SUMMON_ALLIE:
+			# If an allie has yet to be summoned.
+			if !has_summoned_allie:
+				has_summoned_allie = true
+				call_deferred("summon_allie")
+			# An allie has already been summoned, so just keep moving.
+			else:
+				simple_movement()
 		_:
 			print("I tried to ", ghost_ai.get_decision())
+
+func summon_allie():
+	# Start the summon animation around the ghost.
+	animation_player.play("summon")
+	summon_sprite.show()
+	
+	# Create and initialize a timer for how long it takes a new
+	# ghost to be summoned.
+	var timer = Timer.new()
+	timer.autostart = false
+	timer.one_shot = true
+	add_child(timer)
+	
+	timer.start(summon_time)
+	
+	# Wait for the timer to finish.
+	await timer.timeout
+	
+	# Clean up the timer since its done being used.
+	remove_child(timer)
+	timer.queue_free()
+	
+	# Hide the animation now that its done.
+	summon_sprite.hide()
+	animation_player.stop()
+	
+	# TODO: summon another ghost
