@@ -69,6 +69,10 @@ func move():
 	move_and_slide()
 
 func check_if_shoot():
+	# If the player is already shooting, dont let them shoot again yet.
+	if animation_tree.get("parameters/conditions/is_shooting"):
+		return
+	
 	if Input.is_action_just_pressed("left_click"):
 		shoot.emit()
 
