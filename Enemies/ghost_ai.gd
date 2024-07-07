@@ -14,7 +14,7 @@ const MAGIC_B: float = 230
 @export var attack_range: float = 0 # TODO: give a number
 var player_distance: float
 var wave_num: int
-var has_already_summoned: bool
+var has_already_summoned: bool = false
 
 # Saved so the ghost AI knows how far the player always is.
 var player: Player
@@ -77,13 +77,16 @@ func calculate_decision():
 	# to occur.
 	attack_player_weight = floori(attack_range)
 	
-	# Compare the weights, and highest one is chosen as the winner.
-	if chase_player_weight >= attack_player_weight && chase_player_weight >= summon_allie_weight:
-		last_decision = decision.CHASE_PLAYER
-	elif attack_player_weight > chase_player_weight && attack_player_weight > summon_allie_weight:
+	if attack_player_weight > chase_player_weight && attack_player_weight > summon_allie_weight:
 		last_decision = decision.ATTACK_PLAYER
-	else:
+	# Summon allie must be the most likely weight and checks if this ghost has
+	# already summoned an allie. If it has, this check fails, so the 
+	# ghost will just chase the player instead.
+	elif summon_allie_weight > chase_player_weight && summon_allie_weight > attack_player_weight && !has_already_summoned:
 		last_decision = decision.SUMMON_ALLIE
+		has_already_summoned = true
+	else:
+		last_decision = decision.CHASE_PLAYER
 
 # Repeats what the last decision was, no new decision.
 func get_decision() -> int:
