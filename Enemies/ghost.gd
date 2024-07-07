@@ -13,6 +13,12 @@ signal dead
 @export var speed: float = 20
 @export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
 
+# Used to directly call the death animation,
+# otherwise use the Animation tree.
+@onready var animation_player = $AnimationPlayer
+@onready var ghost_sprite = $GhostSprite
+@onready var death_sprite = $DeathSprite
+
 @onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
 @onready var ghost_ai: GhostAI = $GhostAI
@@ -52,15 +58,18 @@ func despawn():
 func fancy_death():
 	dead.emit()
 	
-	# TODO: fancy death animation.
+	# Hide the ghost sprite so the death sprite can replace it.
+	ghost_sprite.hide()
+	
+	# despawn() is called when death animation finishes.
+	animation_player.play("death")
+	death_sprite.show()
 	
 	# When the ghost is dead but playing the death animation, make it so it 
 	# cant hurt the player.
 	hitbox_shape.disabled = true
 	
 	drop_items()
-	
-	despawn()
 
 func drop_items():
 	print("I need to drop items!")
