@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://edho4acf6p4p"]
+
+[ext_resource type="Script" path="res://Managers/entity_manager.gd" id="1_woj45"]
+
+[node name="entity_manager" type="Node2D" groups=["EntityManager"]]
+script = ExtResource("1_woj45")

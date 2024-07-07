@@ -6,75 +6,64 @@ extends Node2D
 class_name GameManager
 
 @onready var ui_manager_scene: PackedScene = preload("res://Managers/ui_manager.tscn")
-
-@onready var player_scene: PackedScene = preload("res://Player/player.tscn")
+@onready var entity_manager_scene: PackedScene = preload("res://Managers/entity_manager.tscn")
 
 const PLAYER_STARTING_POS = Vector2(155, 65)
 
 # Various managers:
 var ui_manager: UIManager
-
-var ghost_spawners: Array[GhostSpawner]
-var player: Player
+var entity_manager: EntityManager
 
 func _ready():
-	# Both have to be call defered since this is happening as soon as the game 
-	# starts. Much is going on loading wise at this time, so lets wait till
-	# its done before we load these things.
-	call_deferred("load_ui_manager")
-	call_deferred("load_main_menu")
+	# Wait for the first frame to have occured.
+	# If it has, that means the game is done initializing and one can
+	# safely start adding nodes to the scene tree without worry of
+	# it being busy and not being able too.
+	await get_tree().process_frame
+	
+	# Load the managers.
+	ui_manager = load_ui_manager()
+	entity_manager = load_entity_manager()
+	
+	ui_manager.load_main_menu()
 	
 func _unhandled_key_input(_event):
 	if Input.is_action_pressed("escape"):
-		quit_game()
+		stop_game()
+		ui_manager.load_main_menu()
 	
 # Load and add the UI manager to the scene.
-func load_ui_manager():
-	ui_manager = ui_manager_scene.instantiate()
-	get_tree().root.add_child(ui_manager)
+func load_ui_manager() -> UIManager:
+	var new_ui_manager: UIManager = ui_manager_scene.instantiate()
+	
+	get_tree().root.add_child(new_ui_manager)
+	
+	return new_ui_manager
 
-func load_main_menu():
-	ui_manager.load_main_menu()
+func load_entity_manager() -> EntityManager:
+	var new_entity_manager: EntityManager = entity_manager_scene.instantiate()
+	
+	get_tree().root.add_child(new_entity_manager)
+	
+	return new_entity_manager
 
 func start_game():
 	# Spawn the player.
-	player = player_scene.instantiate()
-	player.global_position = PLAYER_STARTING_POS
+	entity_manager.load_player(PLAYER_STARTING_POS)
 	
-	get_tree().root.add_child(player)
-	
-	# Any node in the GhostSpawner group we know is a GhostSpawner class.
-	# However, this is not technically guaranteed at compile time, so
-	# we have to do a runtime check and convert the technically unknown nodes
-	# into known GhostSpawners. This is done because a runtime check guarantees
-	# safety.
-	var hopefully_spawners: Array[Node] = get_tree().get_nodes_in_group("GhostSpawner")
-	
-	for potensial_spawner in hopefully_spawners:
-		if potensial_spawner is GhostSpawner:
-			ghost_spawners.append(potensial_spawner)
-		else:
-			push_error("A not ghost spawner is in the ghost spawner group!")
-	
-	# Loop through the checked spawners and start them spawning!
-	for spawner in ghost_spawners:
-		spawner.start()
+	# Load and activate all of the ghost spawners.
+	entity_manager.load_ghost_spawners()
 	
 	# Edit the UI.
 	ui_manager.load_hud()
 	ui_manager.unload_main_menu()
 
 func stop_game():
-	# Stop all the ghost spawners.
-	for spawner in ghost_spawners:
-		spawner.stop()
-		
+	# Unloads all entities and stops all ghost spawners.
+	entity_manager.despawn_all()
+	
 	# Edit the UI.
 	ui_manager.unload_hud()
-	
-	# Removes the player.
-	get_tree().root.remove_child(player)
-	player.queue_free()
 
 func quit_game():
 	get_tree().quit()
