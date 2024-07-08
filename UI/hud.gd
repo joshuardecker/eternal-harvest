@@ -44,7 +44,7 @@ func update_player_health(amount: float):
 	
 # Increases the displayed kill counter by 1.
 func update_score(amount: int):
-	score = amount
+	score += amount
 	score_label.text = "Score: " + str(score)
 	
 # Full reset of whats saved and displayed.

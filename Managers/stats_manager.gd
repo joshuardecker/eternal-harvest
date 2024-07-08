@@ -33,7 +33,7 @@ func update_player_kills():
 
 func update_player_score(points: int):
 	player_score += points
-	new_player_score.emit(player_score)
+	new_player_score.emit(points)
 	
 func update_player_health(new_health: float):
 	player_health = new_health
