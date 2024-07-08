@@ -45,9 +45,6 @@ func _ready():
 	if not player:
 		despawn()
 		return
-		
-	# When the player dies, despawn the ghost.
-	player.connect("is_dead", despawn)
 	
 	# Load a local instance of the hud.
 	var hud = get_tree().get_first_node_in_group("HUD")
