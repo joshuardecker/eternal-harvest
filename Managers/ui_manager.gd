@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 ## A class that manages the various UIs of the game.
 ## Custom functions will handle each UI, ex: main menu, settings menu, ect
@@ -30,23 +30,15 @@ func _ready():
 	if not game_manager:
 		push_error("The UI manager could not find the GameManager!")
 
+# The ui manager itself is a canvas layer, so adding any ui as a child
+# to the ui manager makes the ui drawn on a canvas layer.
 func push_to_canvas(ui):
-	var ui_layer: CanvasLayer = get_tree().get_first_node_in_group("UILayer")
-	
-	if not ui_layer:
-		push_error("UI manager could not find the UILayer!")
-		
-	ui_layer.add_child(ui)
+	add_child(ui)
 
 func remove_from_canvas(ui):
-	var ui_layer: CanvasLayer = get_tree().get_first_node_in_group("UILayer")
-	
-	if not ui_layer:
-		push_error("UI manager could not find the UILayer!")
-		
-	for child in ui_layer.get_children():
+	for child in get_children():
 		if child == ui:
-			ui_layer.remove_child(child)
+			remove_child(child)
 			child.queue_free()
 
 func load_main_menu():
