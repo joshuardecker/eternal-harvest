@@ -145,6 +145,8 @@ func ai_movement(delta: float):
 			# An allie has already been summoned, so just keep moving.
 			else:
 				simple_movement()
+		GhostAI.decision.CHARGE_PLAYER:
+			charge_player()
 		_:
 			print("I tried to ", ghost_ai.get_decision())
 
@@ -174,3 +176,18 @@ func summon_allie():
 	animation_player.stop()
 	
 	# TODO: summon another ghost
+	
+func charge_player():
+	pass
+
+# I dont want charge speed to be constant, I want it to change as 
+# the ghost charges. Linear is boring so I chose a quadratic curve:
+# y = -(2 (x - 0.5)^2 + 1
+# I like this curve because from x = 0 to 1, it starts at 0,
+# peaks at y = 1 when x = 0.5, but then goes back down to y = 0
+# when x = 1. This means if the charge attack is 1 second long,
+# the charge gets faster and faster for the first half second
+# of the charge, but then slows down for the second half,
+# making the attack more interesting then a constant charge speed.
+func charge_speed_curve(x: float) -> float:
+	return -1 * (2 * (x - 0.5)) * (2 * (x - 0.5)) + 1
