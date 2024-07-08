@@ -1,2 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
+# Dont upload local settings to github
+*.cfg
