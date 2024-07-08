@@ -8,6 +8,7 @@ class_name GameManager
 var ui_manager_scene: PackedScene = preload("res://Managers/ui_manager.tscn")
 var entity_manager_scene: PackedScene = preload("res://Managers/entity_manager.tscn")
 var settings_manager_scene: PackedScene = preload("res://Managers/settings_manager.tscn")
+var stats_manager_scene: PackedScene = preload("res://Managers/stats_manager.tscn")
 
 const PLAYER_STARTING_POS = Vector2(155, 65)
 
@@ -15,12 +16,14 @@ const PLAYER_STARTING_POS = Vector2(155, 65)
 var ui_manager: UIManager
 var entity_manager: EntityManager
 var settings_manager: SettingsManager
+var stats_manager: StatsManager
 
 func _ready():
 	# Load the managers.
 	ui_manager = load_ui_manager()
 	entity_manager = load_entity_manager()
 	settings_manager = load_settings_manager()
+	stats_manager = load_stats_manager()
 	
 	ui_manager.load_main_menu()
 	
@@ -46,6 +49,13 @@ func load_entity_manager() -> EntityManager:
 
 func load_settings_manager() -> SettingsManager:
 	var new_manager: SettingsManager = settings_manager_scene.instantiate()
+	
+	get_tree().root.add_child(new_manager)
+	
+	return new_manager
+	
+func load_stats_manager() -> StatsManager:
+	var new_manager: StatsManager = stats_manager_scene.instantiate()
 	
 	get_tree().root.add_child(new_manager)
 	
