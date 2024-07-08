@@ -5,9 +5,9 @@ extends Node2D
 ## Only one of these should exist at a time.
 class_name GameManager
 
-@onready var ui_manager_scene: PackedScene = preload("res://Managers/ui_manager.tscn")
-@onready var entity_manager_scene: PackedScene = preload("res://Managers/entity_manager.tscn")
-@onready var settings_manager_scene: PackedScene = preload("res://Managers/settings_manager.tscn")
+var ui_manager_scene: PackedScene = preload("res://Managers/ui_manager.tscn")
+var entity_manager_scene: PackedScene = preload("res://Managers/entity_manager.tscn")
+var settings_manager_scene: PackedScene = preload("res://Managers/settings_manager.tscn")
 
 const PLAYER_STARTING_POS = Vector2(155, 65)
 
@@ -17,12 +17,6 @@ var entity_manager: EntityManager
 var settings_manager: SettingsManager
 
 func _ready():
-	# Wait for the first frame to have occured.
-	# If it has, that means the game is done initializing and one can
-	# safely start adding nodes to the scene tree without worry of
-	# it being busy and not being able too.
-	await get_tree().process_frame
-	
 	# Load the managers.
 	ui_manager = load_ui_manager()
 	entity_manager = load_entity_manager()
