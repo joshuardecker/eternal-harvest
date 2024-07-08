@@ -30,6 +30,7 @@ signal dead
 @onready var ghost_ai: GhostAI = $GhostAI
 
 var player: Player
+var stats_manager: StatsManager
 
 # How long in seconds since the AIEngine made a new decision on what to do.
 var last_ai_decision_time: float
@@ -45,14 +46,12 @@ func _ready():
 	if not player:
 		despawn()
 		return
+		
+	stats_manager = get_tree().get_first_node_in_group("StatsManager")
 	
-	# Load a local instance of the hud.
-	var hud = get_tree().get_first_node_in_group("HUD")
-	if not hud:
-		push_error("This ghost tried to load the hud and it couldnt!")
-	
-	# When the ghost dies, tell the hud to add one to the kill counter.
-	connect("dead", hud.update_kill_amount)
+	# If the stats manager could not be found.
+	if not stats_manager:
+		push_error("This ghost could not find the stats manager!")
 
 func _process(delta: float):
 	move(delta)
@@ -89,6 +88,9 @@ func fancy_death():
 	hitbox_shape.disabled = true
 	
 	drop_items()
+	
+	# Tell the stats manager that the player got a kill.
+	stats_manager.update_player_kills()
 
 func drop_items():
 	print("I need to drop items!")
