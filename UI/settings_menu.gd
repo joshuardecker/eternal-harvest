@@ -2,27 +2,70 @@ extends Control
 
 class_name SettingsMenu
 
-signal fullscreen(bool)
-signal vsync_mode(int)
 signal back
 
 @onready var fullscreen_button = $CenterContainer2/VBoxContainer/Fullscreen
 @onready var vsync_button = $CenterContainer2/VBoxContainer/VSync
 @onready var back_button = $CenterContainer2/VBoxContainer/Back
 
-#TODO: when the settings manager is added, have the settings menu connect signals there itself.
+# Needs this to tell the UI manager when to return back to the main menu.
+var ui_manager: UIManager
+var settings_manager: SettingsManager
+
+func _ready():
+	# Load the nessesary managers.
+	ui_manager = load_ui_manager()
+	settings_manager = load_settings_manager()
+	
+	load_settings()
 
 func _on_fullscreen_pressed():
-	if fullscreen_button.button_pressed:
-		fullscreen.emit(true)
-	else:
-		fullscreen.emit(false)
+	settings_manager.fullscreen = fullscreen_button.button_pressed
+	
+	settings_manager.apply_settings()
 
 func _on_v_sync_item_selected(index):
-	# I can just emit the index of the option chosen because those indexes
-	# purposefully match the value of the vsync setting. So if the index is 0,
-	# the vsync mode that needs to be set is 0.
-	vsync_mode.emit(index)
+	# If vsync off is selected.
+	if index == 0:
+		settings_manager.current_vsync = settings_manager.vsync_modes.DISABLED
+	# If vsync on is selected.
+	else:
+		settings_manager.current_vsync = settings_manager.vsync_modes.ENABLED
+		
+	settings_manager.apply_settings()
 
 func _on_back_pressed():
-	back.emit()
+	# Since we are leaving the settings menu, now is a good time to save the
+	# new settings to the file.
+	settings_manager.save_settings_to_file()
+	
+	ui_manager.unload_settings_menu()
+
+func load_ui_manager() -> UIManager:
+	var manager: UIManager = get_tree().get_first_node_in_group("UIManager")
+	
+	# If the settings manager is not loaded.
+	if not manager:
+		push_error("The settings menu could not find the UIManager!")
+		
+	return manager
+
+func load_settings_manager() -> SettingsManager:
+	var manager: SettingsManager = get_tree().get_first_node_in_group("SettingsManager")
+	
+	# If the settings manager is not loaded.
+	if not manager:
+		push_error("The settings menu could not find the SettingsManager!")
+		
+	return manager
+
+# Load the settings, that way the menu displays what is currently set.
+func load_settings():
+	fullscreen_button.button_pressed = settings_manager.fullscreen
+	
+	# If vsync is enabled, have that button selected in the settings.
+	if settings_manager.current_vsync == settings_manager.vsync_modes.ENABLED:
+		vsync_button.selected = 1
+	# Vsync is disabled, so have that button selected in the settings.
+	else:
+		vsync_button.selected = 0

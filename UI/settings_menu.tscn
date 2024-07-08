@@ -42,14 +42,12 @@ text = "Fullscreen?"
 [node name="VSync" type="OptionButton" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 alignment = 1
-item_count = 3
+item_count = 2
 selected = 1
 popup/item_0/text = "VSync Off"
 popup/item_0/id = 0
 popup/item_1/text = "VSync Enabled"
 popup/item_1/id = 1
-popup/item_2/text = "VSync Adaptive"
-popup/item_2/id = 2
 
 [node name="Back" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
