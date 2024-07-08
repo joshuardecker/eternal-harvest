@@ -6,9 +6,14 @@ extends CharacterBody2D
 ## at is handled.
 class_name Player
 
+## When the player shoots.
+signal shoot
+signal took_damage(health_now: float)
+## When the player dies.
+signal is_dead
+
 ## Pixels per second the player moves.
 @export var speed: float = 100
-
 @onready var animation_tree = $AnimationTree
 
 # Engines:
@@ -17,14 +22,15 @@ class_name Player
 # The last direction the player moved, that way the correct idle direction can be displayed.
 var last_moving_velocity: Vector2
 
-## When the player shoots.
-signal shoot
-signal took_damage(health_now: float)
-## When the player dies.
-signal is_dead
+var stats_manager: StatsManager
 
 func _ready():
-	pass
+	# Load the stats manager.
+	stats_manager = get_tree().get_first_node_in_group("StatsManager")
+	
+	# If the stats manager could not be loaded.
+	if not stats_manager:
+		push_error("The player could not find the stats manager!")
 
 func _process(_delta):
 	check_if_shoot()
@@ -77,13 +83,4 @@ func check_if_shoot():
 		shoot.emit()
 
 func _on_health_engine_took_damage(new_health: float):
-	update_hud_health(new_health)
-
-func update_hud_health(new_health: float):
-	var hud: HUD = get_tree().get_first_node_in_group("HUD")
-	
-	# If the hud was not loaded.
-	if not hud:
-		push_error("The player can not load the hud!")
-		
-	hud.update_player_health(new_health)
+	stats_manager.update_player_health(new_health)
