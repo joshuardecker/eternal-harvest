@@ -7,12 +7,14 @@ class_name GameManager
 
 @onready var ui_manager_scene: PackedScene = preload("res://Managers/ui_manager.tscn")
 @onready var entity_manager_scene: PackedScene = preload("res://Managers/entity_manager.tscn")
+@onready var settings_manager_scene: PackedScene = preload("res://Managers/settings_manager.tscn")
 
 const PLAYER_STARTING_POS = Vector2(155, 65)
 
 # Various managers:
 var ui_manager: UIManager
 var entity_manager: EntityManager
+var settings_manager: SettingsManager
 
 func _ready():
 	# Wait for the first frame to have occured.
@@ -24,6 +26,7 @@ func _ready():
 	# Load the managers.
 	ui_manager = load_ui_manager()
 	entity_manager = load_entity_manager()
+	settings_manager = load_settings_manager()
 	
 	ui_manager.load_main_menu()
 	
@@ -34,18 +37,25 @@ func _unhandled_key_input(_event):
 	
 # Load and add the UI manager to the scene.
 func load_ui_manager() -> UIManager:
-	var new_ui_manager: UIManager = ui_manager_scene.instantiate()
+	var new_manager: UIManager = ui_manager_scene.instantiate()
 	
-	get_tree().root.add_child(new_ui_manager)
+	get_tree().root.add_child(new_manager)
 	
-	return new_ui_manager
+	return new_manager
 
 func load_entity_manager() -> EntityManager:
-	var new_entity_manager: EntityManager = entity_manager_scene.instantiate()
+	var new_manager: EntityManager = entity_manager_scene.instantiate()
 	
-	get_tree().root.add_child(new_entity_manager)
+	get_tree().root.add_child(new_manager)
 	
-	return new_entity_manager
+	return new_manager
+
+func load_settings_manager() -> SettingsManager:
+	var new_manager: SettingsManager = settings_manager_scene.instantiate()
+	
+	get_tree().root.add_child(new_manager)
+	
+	return new_manager
 
 func start_game():
 	# Spawn the player.
@@ -67,15 +77,3 @@ func stop_game():
 
 func quit_game():
 	get_tree().quit()
-	
-# TODO: move to the settings manager
-func change_fullscreen(enabled: bool):
-	if enabled:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		
-# TODO: move to settings manager
-# The settings menu automatically sends the correct mode as an int.
-func change_vsync_mode(mode: int):
-	DisplayServer.window_set_vsync_mode(mode)
