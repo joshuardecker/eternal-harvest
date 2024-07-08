@@ -71,6 +71,9 @@ func start_game():
 	# Edit the UI.
 	ui_manager.load_hud()
 	ui_manager.unload_main_menu()
+	
+	# Makes sure the stats are fresh for this game.
+	stats_manager.reset()
 
 func stop_game():
 	# Unloads all entities and stops all ghost spawners.
