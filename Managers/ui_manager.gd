@@ -59,12 +59,7 @@ func load_settings_menu():
 	
 	settings_menu = settings_menu_scene.instantiate()
 	push_to_canvas(settings_menu)
-	
-	# Connect useful settings functions.
-	settings_menu.connect("fullscreen", game_manager.change_fullscreen)
-	settings_menu.connect("vsync_mode", game_manager.change_vsync_mode)
-	settings_menu.connect("back", unload_settings_menu)
-	
+
 func unload_settings_menu():
 	remove_from_canvas(settings_menu)
 	
