@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://unlfm8yeette"]
+[gd_scene load_steps=9 format=3 uid="uid://unlfm8yeette"]
 
-[ext_resource type="PackedScene" uid="uid://bodh7tmqnsy7g" path="res://Managers/game_manager.tscn" id="1_bed3s"]
 [ext_resource type="PackedScene" uid="uid://df3s6cwpnlxn8" path="res://Enemies/ghost_spawner.tscn" id="5_awnpw"]
 [ext_resource type="Texture2D" uid="uid://dk8bvrxmfdk1b" path="res://World/Assets/grass-tile.png" id="5_cwqfy"]
 [ext_resource type="Texture2D" uid="uid://bdopj0bcck4ij" path="res://World/Assets/path-tile.png" id="6_0npni"]
@@ -52,8 +51,6 @@ sources/1 = SubResource("TileSetAtlasSource_hwtte")
 sources/2 = SubResource("TileSetAtlasSource_frixy")
 
 [node name="World" type="Node2D" groups=["World"]]
-
-[node name="GameManager" parent="." instance=ExtResource("1_bed3s")]
 
 [node name="Terrain" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_08olc")
