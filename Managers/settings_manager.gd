@@ -11,7 +11,7 @@ const SECTION: String = "Player"
 
 #====#
 # Settings to remember:
-var fullscreen: bool
+var fullscreen: bool = true
 
 enum vsync_modes { ENABLED, DISABLED }
 var current_vsync = vsync_modes.ENABLED
@@ -27,7 +27,7 @@ func _ready():
 		save_settings_to_file()
 	
 	apply_settings()
-	
+
 func load_settings_from_file() -> Error:
 	var cfg: ConfigFile = ConfigFile.new()
 	
