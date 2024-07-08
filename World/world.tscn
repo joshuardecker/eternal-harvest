@@ -62,5 +62,3 @@ layer_0/tile_data = PackedInt32Array(-589834, 0, 0, -524298, 0, 0, -458762, 0, 0
 
 [node name="GhostSpawner" parent="." instance=ExtResource("5_awnpw")]
 position = Vector2(108, 92)
-
-[node name="UILayer" type="CanvasLayer" parent="." groups=["UILayer"]]
