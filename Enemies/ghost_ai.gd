@@ -9,6 +9,10 @@ class_name GhostAI
 const MAGIC_A: float = 200
 const MAGIC_B: float = 230
 
+# The chance that the ghost charges the player instead of just moving
+# towards them.
+const CHANCE_OF_CHARGING: int = 10
+
 # Factors considered to determine the ghosts action:
 # These are to be set by other scripts.
 @export var attack_range: float = 0 # TODO: give a number
@@ -28,6 +32,7 @@ var summon_allie_weight: int = 1
 # The possible actions the ghost can take according to this engine.
 enum decision {
 	CHASE_PLAYER,
+	CHARGE_PLAYER,
 	ATTACK_PLAYER,
 	SUMMON_ALLIE
 }
@@ -86,8 +91,24 @@ func calculate_decision():
 		last_decision = decision.SUMMON_ALLIE
 		has_already_summoned = true
 	else:
-		last_decision = decision.CHASE_PLAYER
+		last_decision = charge_or_chase()
 
 # Repeats what the last decision was, no new decision.
 func get_decision() -> int:
 	return last_decision
+
+# Usually will just return the decision that the ghost should chase the player.
+# But there is a small chance that the ghost instead does a charge.
+func charge_or_chase() -> decision:
+	# Generate a random int between 0 and 99.
+	var rand: int = randi() % 100
+	
+	# If the random number is less than the chance of 
+	# charging the player, charge the player.
+	# If the chance of charging is 15%, 0-14, 15 numbers total
+	# are all below 15, giving the chance of returning CHARGE_PLAYER
+	# the chance set by the CHANCE_OF_CHARGING const.
+	if rand < CHANCE_OF_CHARGING:
+		return decision.CHARGE_PLAYER
+	else:
+		return decision.CHASE_PLAYER
