@@ -10,6 +10,7 @@ default_font_size = 20
 
 [node name="HUD" type="Control" groups=["HUD"]]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 540.0
 offset_bottom = 360.0
 grow_horizontal = 2
@@ -47,8 +48,8 @@ modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="KillAmount" type="Label" parent="CenterContainer/HBoxContainer"]
+[node name="Score" type="Label" parent="CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "Kills: 0"
+text = "Score: 0"
 horizontal_alignment = 1
