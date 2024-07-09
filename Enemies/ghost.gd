@@ -10,12 +10,16 @@ class_name Ghost
 # and dont have to hook the HealthEngine to the game manager.
 signal dead
 
-@export var speed: float = 20
 @export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
-## How long it will take the ghost to summon an allie in seconds.
-@export var summon_time: float = 5
-## How often in seconds the AI engine should make a new decision on what to do.
-@export var ai_decision_time_freq: float = 1
+
+const SPEED: float = 20
+const CHARGE_SPEED: float = SPEED * 5
+
+# How often in seconds the AI engine should make a new decision on what to do.
+const AI_DECISION_FREQ: float = 1
+
+# How long it will take the ghost to summon an allie in seconds.
+const SUMMON_TIME: float = 5
 
 # Use the animation tree to manipulate the ghost sprite.
 # This animation player should only be used to mess with the other sprites that
@@ -24,9 +28,9 @@ signal dead
 @onready var ghost_sprite = $GhostSprite
 @onready var death_sprite = $DeathSprite
 @onready var summon_sprite = $SummonSprite
-
 @onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
+
 @onready var ghost_ai: GhostAI = $GhostAI
 
 var player: Player
@@ -104,14 +108,14 @@ func _on_health_engine_is_dead():
 func move(delta: float):
 	match movement_type:
 		"simple_movement":
-			simple_movement()
+			simple_movement(SPEED)
 		"ai_movement":
 			ai_movement(delta)
 		_:
 			push_error("This ghost is using a movement engine that doesnt exist!")
 
 # Moves the ghost directly toward the players current position.
-func simple_movement():
+func simple_movement(speed: float):
 	var target_position = global_position.direction_to(player.global_position)
 	velocity = target_position * speed
 	move_and_slide()
@@ -127,16 +131,13 @@ func ai_movement(delta: float):
 	# If its been long enough, calculate a new decison on what to do.
 	# This doesnt mean behavior will change since the same answer can be
 	# given again by calculate_decision, but it could change.
-	if last_ai_decision_time > ai_decision_time_freq:
-		ghost_ai.calculate_decision()
+	if last_ai_decision_time > AI_DECISION_FREQ:
+		call_deferred("new_ai_decision")
 		
-		# Reset time since a decision was made.
-		last_ai_decision_time = 0
-	
 	match ghost_ai.get_decision():
 		GhostAI.decision.CHASE_PLAYER:
 			# TODO: make the movement more advanced.
-			simple_movement()
+			simple_movement(SPEED)
 		GhostAI.decision.SUMMON_ALLIE:
 			# If an allie has yet to be summoned.
 			if !has_summoned_allie:
@@ -144,11 +145,19 @@ func ai_movement(delta: float):
 				call_deferred("summon_allie")
 			# An allie has already been summoned, so just keep moving.
 			else:
-				simple_movement()
+				simple_movement(SPEED)
 		GhostAI.decision.CHARGE_PLAYER:
 			charge_player()
 		_:
 			print("I tried to ", ghost_ai.get_decision())
+
+# Calculate a new decision and reset the timer affecting when a new decision 
+# will be made.
+func new_ai_decision():
+	ghost_ai.calculate_decision()
+	
+	# Reset time since a decision was made.
+	last_ai_decision_time = 0
 
 func summon_allie():
 	# Start the summon animation around the ghost.
@@ -162,7 +171,7 @@ func summon_allie():
 	timer.one_shot = true
 	add_child(timer)
 	
-	timer.start(summon_time)
+	timer.start(SUMMON_TIME)
 	
 	# Wait for the timer to finish.
 	await timer.timeout
@@ -178,7 +187,9 @@ func summon_allie():
 	# TODO: summon another ghost
 	
 func charge_player():
-	pass
+	var speed_modifier: float = charge_speed_curve(last_ai_decision_time)
+	
+	simple_movement(speed_modifier * CHARGE_SPEED)
 
 # I dont want charge speed to be constant, I want it to change as 
 # the ghost charges. Linear is boring so I chose a quadratic curve:
