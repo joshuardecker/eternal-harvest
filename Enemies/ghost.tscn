@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://jj53cenwludu"]
+[gd_scene load_steps=26 format=3 uid="uid://jj53cenwludu"]
 
 [ext_resource type="Script" path="res://Enemies/ghost.gd" id="1_t2ber"]
 [ext_resource type="Texture2D" uid="uid://yaao46wfc6ej" path="res://Enemies/Assets/ghost.png" id="2_w0xbk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://qhvc5fo5l65t" path="res://Enemies/Assets/ghost-summon.png" id="4_255pj"]
 [ext_resource type="Script" path="res://Engines/hitbox.gd" id="4_ei0m8"]
 [ext_resource type="Script" path="res://Enemies/ghost_ai.gd" id="5_uh4gl"]
+[ext_resource type="Texture2D" uid="uid://d0p1dltlc3bmy" path="res://World/Light.png" id="8_xxtj2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wy2y6"]
 size = Vector2(13, 7.5)
@@ -212,6 +213,7 @@ graph_offset = Vector2(-270, -30)
 size = Vector2(18, 22)
 
 [node name="ghost" type="CharacterBody2D"]
+modulate = Color(2, 2, 2, 1)
 script = ExtResource("1_t2ber")
 movement_type = "ai_movement"
 
@@ -266,5 +268,11 @@ shape = SubResource("RectangleShape2D_47wh5")
 [node name="GhostAI" type="Node2D" parent="."]
 script = ExtResource("5_uh4gl")
 attack_range = 5.0
+
+[node name="PointLight" type="PointLight2D" parent="."]
+position = Vector2(0, -8)
+energy = 0.2
+texture = ExtResource("8_xxtj2")
+texture_scale = 0.15
 
 [connection signal="is_dead" from="HealthEngine" to="." method="_on_health_engine_is_dead"]

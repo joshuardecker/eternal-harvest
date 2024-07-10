@@ -1,10 +1,11 @@
-[gd_scene load_steps=44 format=3 uid="uid://dpe7m8fpsarqr"]
+[gd_scene load_steps=45 format=3 uid="uid://dpe7m8fpsarqr"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
 [ext_resource type="Texture2D" uid="uid://byf4bod6rrtwf" path="res://Player/Assets/pumpkin-player.png" id="2_lsqsm"]
 [ext_resource type="Script" path="res://Engines/health.gd" id="3_uy5c7"]
 [ext_resource type="Script" path="res://Player/gun_engine.gd" id="4_1v6bh"]
 [ext_resource type="Script" path="res://Engines/hitbox.gd" id="5_rd677"]
+[ext_resource type="Texture2D" uid="uid://d0p1dltlc3bmy" path="res://World/Light.png" id="6_4jqn3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pghi"]
 size = Vector2(14, 27)
@@ -408,6 +409,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-216, -6)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+modulate = Color(2, 2, 2, 1)
 script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -462,5 +464,12 @@ drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="PointLight" type="PointLight2D" parent="."]
+position = Vector2(0, -20)
+color = Color(1, 1, 0.486275, 1)
+energy = 0.1
+texture = ExtResource("6_4jqn3")
+texture_scale = 0.15
 
 [connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]
