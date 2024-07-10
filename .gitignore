@@ -2,3 +2,5 @@
 .godot/
 # Dont upload local settings to github
 *.cfg
+# Dont upload the game export to github
+Export/
