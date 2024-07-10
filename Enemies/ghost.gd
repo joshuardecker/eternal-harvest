@@ -30,6 +30,7 @@ const SUMMON_TIME: float = 5
 @onready var summon_sprite = $SummonSprite
 @onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
+@onready var point_light = $PointLight
 
 @onready var ghost_ai: GhostAI = $GhostAI
 
@@ -82,6 +83,9 @@ func fancy_death():
 	# so it is possible for a ghost to be summoned while this ghost is in
 	# the death animation.
 	summon_sprite.hide()
+	
+	# Stop emitting light when the ghost model is disapearing.
+	point_light.hide()
 	
 	# despawn() is called when death animation finishes.
 	animation_player.play("death")
