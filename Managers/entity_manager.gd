@@ -6,10 +6,14 @@ class_name EntityManager
 
 @onready var player_scene: PackedScene = load("res://Player/player.tscn")
 @onready var ghost_scene: PackedScene = load("res://Enemies/ghost.tscn")
+# When the bullet scene has been updated to be generic
+# load that here.
+@onready var bullet_scene: PackedScene = load("")
 
 var player: Player
 var ghosts: Array[Ghost]
 var ghost_spawners: Array[GhostSpawner]
+var bullets: Array[Bullet]
 
 var world: Node2D
 
@@ -104,6 +108,35 @@ but the world hasnt been loaded!")
 		spawner.start()
 			
 	return ghost_spawners
+
+func load_bullet(global_pos: Vector2) -> Bullet:
+	# If the world does not exist.
+	if not world:
+		push_error("Entity manager tried to load a bullet
+but the world hasnt been loaded!")
+	
+	var bullet: Bullet = bullet_scene.instantiate()
+	
+	# Set the position then add to the scene tree.
+	bullet.global_position = global_pos
+	world.add_child(bullet)
+	
+	# Remember the bullet for later.
+	bullets.append(bullet)
+	
+	return bullet
+	
+func despawn_bullet(bullet: Bullet):
+	# Bullet has already despawned and set to null.
+	if not Bullet:
+		return
+		
+	# Drops the bullet from the array.
+	# If it already has been dropped, nothing happens.
+	bullets.erase(bullet)
+	
+	world.remove_child(bullet)
+	bullet.queue_free()
 
 # Despawns all entities known to the entity manager.
 # Also deactivates all of the ghost spawners.
