@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://unlfm8yeette"]
 
-[ext_resource type="PackedScene" uid="uid://df3s6cwpnlxn8" path="res://Enemies/ghost_spawner.tscn" id="5_awnpw"]
+[ext_resource type="PackedScene" uid="uid://df3s6cwpnlxn8" path="res://Enemies/Ghost/Spawner/ghost_spawner.tscn" id="5_awnpw"]
 [ext_resource type="Texture2D" uid="uid://dk8bvrxmfdk1b" path="res://World/Assets/grass-tile.png" id="5_cwqfy"]
 [ext_resource type="Texture2D" uid="uid://bdopj0bcck4ij" path="res://World/Assets/path-tile.png" id="6_0npni"]
 [ext_resource type="Texture2D" uid="uid://cvvlctw6qlvxx" path="res://World/Assets/rock-tile.png" id="7_fdt0e"]

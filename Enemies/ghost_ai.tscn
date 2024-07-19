@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://byvqoy38oa5bi"]
-
-[ext_resource type="Script" path="res://Enemies/ghost_ai.gd" id="1_nxola"]
-
-[node name="GhostAI" type="Node2D"]
-script = ExtResource("1_nxola")

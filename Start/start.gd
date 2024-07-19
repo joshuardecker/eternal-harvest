@@ -5,7 +5,7 @@ extends Node
 class_name Start
 
 var world_scene: PackedScene = preload("res://World/world.tscn")
-var game_manager_scene: PackedScene = preload("res://Managers/game_manager.tscn")
+var game_manager_scene: PackedScene = preload("res://Managers/Game/game.tscn")
 
 func _ready():
 	# Load the world and game manager.

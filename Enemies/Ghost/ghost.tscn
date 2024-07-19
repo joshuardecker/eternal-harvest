@@ -1,0 +1,280 @@
+[gd_scene load_steps=26 format=3 uid="uid://jj53cenwludu"]
+
+[ext_resource type="Script" path="res://Enemies/Ghost/ghost.gd" id="1_t2ber"]
+[ext_resource type="Texture2D" uid="uid://yaao46wfc6ej" path="res://Enemies/Assets/ghost.png" id="2_w0xbk"]
+[ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_maugh"]
+[ext_resource type="Texture2D" uid="uid://bvdbo2n14i5aj" path="res://Enemies/Assets/ghost-death.png" id="3_p3eig"]
+[ext_resource type="Texture2D" uid="uid://qhvc5fo5l65t" path="res://Enemies/Assets/ghost-summon.png" id="4_255pj"]
+[ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="4_ei0m8"]
+[ext_resource type="Script" path="res://Enemies/Ghost/GhostAI/ghost_ai.gd" id="5_uh4gl"]
+[ext_resource type="Texture2D" uid="uid://d0p1dltlc3bmy" path="res://World/Assets/Light.png" id="8_xxtj2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy2y6"]
+size = Vector2(13, 7.5)
+
+[sub_resource type="Animation" id="Animation_5fq2s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/GhostSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/DeathSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/SummonSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xx5c4"]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/DeathSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"despawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_qkjou"]
+resource_name = "move_down"
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/GhostSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [28, 29, 30, 31, 32]
+}
+
+[sub_resource type="Animation" id="Animation_1nmar"]
+resource_name = "move_left"
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/GhostSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_26ibb"]
+resource_name = "move_right"
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/GhostSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18]
+}
+
+[sub_resource type="Animation" id="Animation_6qi00"]
+resource_name = "move_up"
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/GhostSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [42, 43, 44, 45, 46]
+}
+
+[sub_resource type="Animation" id="Animation_qc8n8"]
+resource_name = "summon"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/SummonSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h68lo"]
+_data = {
+"RESET": SubResource("Animation_5fq2s"),
+"death": SubResource("Animation_xx5c4"),
+"move_down": SubResource("Animation_qkjou"),
+"move_left": SubResource("Animation_1nmar"),
+"move_right": SubResource("Animation_26ibb"),
+"move_up": SubResource("Animation_6qi00"),
+"summon": SubResource("Animation_qc8n8")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x77rg"]
+animation = &"move_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4gbt5"]
+animation = &"move_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u2j6o"]
+animation = &"move_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cblps"]
+animation = &"move_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_4s806"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_x77rg")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_4gbt5")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_u2j6o")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_cblps")
+blend_point_3/pos = Vector2(0, -1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tlukk"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ma8qi"]
+states/Move/node = SubResource("AnimationNodeBlendSpace2D_4s806")
+states/Move/position = Vector2(352, 100)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_tlukk")]
+graph_offset = Vector2(-270, -30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_47wh5"]
+size = Vector2(18, 22)
+
+[node name="ghost" type="CharacterBody2D"]
+modulate = Color(2, 2, 2, 1)
+script = ExtResource("1_t2ber")
+movement_type = "ai_movement"
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_wy2y6")
+disabled = true
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="GhostSprite" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -11)
+texture = ExtResource("2_w0xbk")
+hframes = 14
+vframes = 4
+
+[node name="DeathSprite" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("3_p3eig")
+hframes = 5
+
+[node name="SummonSprite" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("4_255pj")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_h68lo")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_ma8qi")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Move/blend_position = Vector2(0.0079186, 0.299663)
+
+[node name="HealthEngine" type="Node2D" parent="."]
+script = ExtResource("3_maugh")
+health = 30.0
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_ei0m8")
+damage = 20.0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_47wh5")
+
+[node name="GhostAI" type="Node2D" parent="."]
+script = ExtResource("5_uh4gl")
+attack_range = 5.0
+
+[node name="PointLight" type="PointLight2D" parent="."]
+position = Vector2(0, -1)
+energy = 0.2
+texture = ExtResource("8_xxtj2")
+texture_scale = 0.15
+
+[connection signal="is_dead" from="HealthEngine" to="." method="_on_health_engine_is_dead"]
