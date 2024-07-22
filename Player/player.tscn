@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=3 uid="uid://dpe7m8fpsarqr"]
 
-[ext_resource type="Script" path="res://Player/Player/player.gd" id="1_njaer"]
+[ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
 [ext_resource type="Texture2D" uid="uid://byf4bod6rrtwf" path="res://Player/Assets/pumpkin-player.png" id="2_lsqsm"]
 [ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_uy5c7"]
 [ext_resource type="Script" path="res://Player/GunEngine/gun_engine.gd" id="4_1v6bh"]
@@ -409,7 +409,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-216, -6)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-modulate = Color(2, 2, 2, 1)
+modulate = Color(3, 3, 3, 1)
 script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -468,10 +468,10 @@ drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
 [node name="PointLight" type="PointLight2D" parent="."]
-position = Vector2(0, -18)
-color = Color(1, 1, 0.486275, 1)
+position = Vector2(0, -19)
+color = Color(1, 0.686275, 0.486275, 1)
 energy = 0.1
 texture = ExtResource("6_4jqn3")
-texture_scale = 0.15
+texture_scale = 0.12
 
 [connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]

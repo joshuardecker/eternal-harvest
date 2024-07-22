@@ -11,6 +11,7 @@
 size = Vector2(2, 2)
 
 [node name="PlayerProjectile" type="CharacterBody2D"]
+modulate = Color(2, 2, 2, 1)
 script = ExtResource("1_117hk")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
