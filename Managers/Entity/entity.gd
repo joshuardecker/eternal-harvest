@@ -4,7 +4,7 @@ extends Node2D
 ## Example: the player, ghosts, ghost spawners, etc.
 class_name EntityManager
 
-@onready var player_scene: PackedScene = load("res://Player/Player/player.tscn")
+@onready var player_scene: PackedScene = load("res://Player/player.tscn")
 @onready var ghost_scene: PackedScene = load("res://Enemies/Ghost/ghost.tscn")
 
 var player: Player
