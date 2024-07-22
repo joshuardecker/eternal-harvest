@@ -213,7 +213,7 @@ graph_offset = Vector2(-270, -30)
 size = Vector2(18, 22)
 
 [node name="ghost" type="CharacterBody2D"]
-modulate = Color(2, 2, 2, 1)
+modulate = Color(3, 3, 3, 1)
 script = ExtResource("1_t2ber")
 movement_type = "ai_movement"
 
@@ -272,9 +272,9 @@ script = ExtResource("5_uh4gl")
 attack_range = 5.0
 
 [node name="PointLight" type="PointLight2D" parent="."]
-position = Vector2(0, -1)
-energy = 0.2
+position = Vector2(0, -8)
+energy = 0.15
 texture = ExtResource("8_xxtj2")
-texture_scale = 0.15
+texture_scale = 0.12
 
 [connection signal="is_dead" from="HealthEngine" to="." method="_on_health_engine_is_dead"]
