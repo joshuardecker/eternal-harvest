@@ -19,6 +19,9 @@ signal is_dead
 # Engines:
 @onready var health_engine = $HealthEngine
 
+# The players inventory.
+var inventory: Inventory
+
 # The last direction the player moved, that way the correct idle direction can be displayed.
 var last_moving_velocity: Vector2
 
