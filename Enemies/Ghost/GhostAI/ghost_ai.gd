@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 ## A simple AI engine for the ghosts advanced movement type.
 ## Takes into account a few factors in order to determine what the ghost should
@@ -15,10 +15,14 @@ const CHANCE_OF_CHARGING: int = 10
 
 # Factors considered to determine the ghosts action:
 # These are to be set by other scripts.
-@export var attack_range: float = 0 # TODO: give a number
+const attack_range: float = 0 # TODO: give a number
 var player_distance: float
 var wave_num: int
 var has_already_summoned: bool = false
+
+# This AI needs to know the parent to get its position
+# relative to the player.
+var parent: Node
 
 # Saved so the ghost AI knows how far the player always is.
 var player: Player
@@ -48,6 +52,8 @@ func _ready():
 	
 	if not Player:
 		push_error("Ghost AI engine could not find the player!")
+		
+	parent = get_parent()
 
 # Every pixel that the ghost is from the player is 1 weight towards the 
 # ghost going after the player. So if the ghost is 1 pixel away, not very likely 
@@ -70,7 +76,7 @@ func log_curve(x: float) -> int:
 # Calculates a new decision on what the ghost should do.
 func calculate_decision():
 	# Gets the player distance at this very moment.
-	player_distance = global_position.distance_to(player.global_position)
+	player_distance = parent.global_position.distance_to(player.global_position)
 	
 	# Details already explained above these funcs.
 	chase_player_weight = linear_curve(player_distance)

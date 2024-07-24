@@ -32,7 +32,7 @@ const SUMMON_TIME: float = 5
 @onready var hitbox_shape = $Hitbox/CollisionShape
 @onready var point_light = $PointLight
 
-@onready var ghost_ai: GhostAI = $GhostAI
+var ghost_ai: GhostAI 
 
 var player: Player
 var stats_manager: StatsManager
@@ -57,6 +57,10 @@ func _ready():
 	# If the stats manager could not be found.
 	if not stats_manager:
 		push_error("This ghost could not find the stats manager!")
+		
+	# Creates and adds the ghostai to the scene.
+	ghost_ai = GhostAI.new()
+	add_child(ghost_ai)
 
 func _process(delta: float):
 	move(delta)

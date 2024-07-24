@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://jj53cenwludu"]
+[gd_scene load_steps=25 format=3 uid="uid://jj53cenwludu"]
 
 [ext_resource type="Script" path="res://Enemies/Ghost/ghost.gd" id="1_t2ber"]
 [ext_resource type="Texture2D" uid="uid://yaao46wfc6ej" path="res://Enemies/Assets/ghost.png" id="2_w0xbk"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bvdbo2n14i5aj" path="res://Enemies/Assets/ghost-death.png" id="3_p3eig"]
 [ext_resource type="Texture2D" uid="uid://qhvc5fo5l65t" path="res://Enemies/Assets/ghost-summon.png" id="4_255pj"]
 [ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="4_ei0m8"]
-[ext_resource type="Script" path="res://Enemies/Ghost/GhostAI/ghost_ai.gd" id="5_uh4gl"]
 [ext_resource type="Texture2D" uid="uid://d0p1dltlc3bmy" path="res://World/Assets/Light.png" id="8_xxtj2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wy2y6"]
@@ -266,10 +265,6 @@ damage = 20.0
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_47wh5")
-
-[node name="GhostAI" type="Node2D" parent="."]
-script = ExtResource("5_uh4gl")
-attack_range = 5.0
 
 [node name="PointLight" type="PointLight2D" parent="."]
 position = Vector2(0, -8)
