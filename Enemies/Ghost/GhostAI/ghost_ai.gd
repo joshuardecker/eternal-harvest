@@ -11,7 +11,7 @@ const MAGIC_B: float = 230
 
 # The chance that the ghost charges the player instead of just moving
 # towards them.
-const CHANCE_OF_CHARGING: int = 10
+const CHANCE_OF_CHARGING: int = 20
 
 # Factors considered to determine the ghosts action:
 # These are to be set by other scripts.
