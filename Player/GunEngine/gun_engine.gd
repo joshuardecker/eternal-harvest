@@ -8,7 +8,6 @@ class_name GunEngine
 @export var speed: float = 200
 @export var damage: float = 40
 
-@onready var bullet: PackedScene = load("res://Player/Projectile/projectile.tscn")
 @onready var animation_tree = $"../AnimationTree"
 
 # Normally the bullet will spawn at the base of the player.
@@ -16,8 +15,10 @@ class_name GunEngine
 # magic value.
 const MAGIC_VALUE = Vector2(0, -8)
 
-## The direction the bullet will travel. 
-## Note: this should be normalized (length of 1).
+var bullet_scene: PackedScene = load("res://Player/Projectile/player_projectile.tscn")
+
+# The direction the bullet will travel. 
+# Note: this should be normalized (length of 1).
 var direction_vec: Vector2
 
 var player: Player
@@ -38,7 +39,7 @@ func shoot_single_bullet():
 	var target = player.global_position.direction_to(get_global_mouse_position())
 	
 	# Spawn the bullet and add it to the scene.
-	var new_bullet: Projectile = bullet.instantiate()
+	var new_bullet: Projectile = bullet_scene.instantiate()
 	
 	add_child(new_bullet)
 	
@@ -60,6 +61,7 @@ func shoot_single_bullet():
 	# for the player to have access to.
 	animation_tree.get("parameters/playback").travel("Shoot")
 
+# Called automatically at the end of the shooting animations.
 func can_shoot_again():
 	# No longer say the player is shooting.
 	animation_tree.set("parameters/conditions/is_shooting", false)
