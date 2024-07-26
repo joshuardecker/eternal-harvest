@@ -447,8 +447,6 @@ heal_modifier = 10.0
 [node name="GunEngine" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("4_1v6bh")
-speed = null
-damage = null
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 2
