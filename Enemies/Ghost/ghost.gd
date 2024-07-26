@@ -59,6 +59,8 @@ func _ready():
 		push_error("This ghost could not find the stats manager!")
 		
 	# Creates and adds the ghostai to the scene.
+	# Needs to be added to the scene because the ghostai script searches
+	# the scene tree for the player.
 	ghost_ai = GhostAI.new()
 	add_child(ghost_ai)
 
