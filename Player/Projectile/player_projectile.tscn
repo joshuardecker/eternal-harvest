@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dgjwadvxklpb1"]
 
-[ext_resource type="Script" path="res://Engines/Projectile/projectile.gd" id="1_117hk"]
-[ext_resource type="Texture2D" uid="uid://dek80idawkcwx" path="res://Player/Assets/Bullet.png" id="2_o6t77"]
-[ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_cqbm7"]
-[ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="4_3x25l"]
+[ext_resource type="Script" path="res://Engines/Projectile/projectile.gd" id="1_dbvfs"]
+[ext_resource type="Texture2D" uid="uid://dek80idawkcwx" path="res://Player/Assets/Bullet.png" id="2_ioafo"]
+[ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_g80d7"]
+[ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="4_06yxe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2n6n"]
 
@@ -12,7 +12,7 @@ size = Vector2(2, 2)
 
 [node name="PlayerProjectile" type="CharacterBody2D"]
 modulate = Color(2, 2, 2, 1)
-script = ExtResource("1_117hk")
+script = ExtResource("1_dbvfs")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 visible = false
@@ -20,15 +20,15 @@ shape = SubResource("RectangleShape2D_w2n6n")
 disabled = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_o6t77")
+texture = ExtResource("2_ioafo")
 
 [node name="HealthEngine" type="Node2D" parent="."]
-script = ExtResource("3_cqbm7")
+script = ExtResource("3_g80d7")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 4
-script = ExtResource("4_3x25l")
+script = ExtResource("4_06yxe")
 damage = 10.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
