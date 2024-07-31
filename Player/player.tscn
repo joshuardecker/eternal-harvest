@@ -409,7 +409,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-216, -6)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-modulate = Color(3, 3, 3, 1)
+scale = Vector2(3, 3)
 script = ExtResource("1_njaer")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -420,6 +420,7 @@ vframes = 4
 frame = 36
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_8pghi")
 
@@ -455,6 +456,7 @@ script = ExtResource("5_rd677")
 damage = 20.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_8pghi")
 
@@ -468,7 +470,6 @@ drag_bottom_margin = 0.1
 [node name="PointLight" type="PointLight2D" parent="."]
 position = Vector2(0, -19)
 color = Color(1, 0.686275, 0.486275, 1)
-energy = 0.1
 texture = ExtResource("6_4jqn3")
 texture_scale = 0.12
 

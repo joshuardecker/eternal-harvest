@@ -13,7 +13,7 @@ signal took_damage(health_now: float)
 signal is_dead
 
 ## Pixels per second the player moves.
-@export var speed: float = 100
+@export var speed: float = 300
 @onready var animation_tree = $AnimationTree
 
 # Engines:
