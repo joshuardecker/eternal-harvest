@@ -1,12 +1,23 @@
-# The Video Game: Eternal Harvest
+# Eternal Harvest
 ## What is it?
-Eternal harvest is a simple 2d, open source video game I have made because video
-game development is fun and a good test of the mind. 
+This is a video game in active development. I never intend to make any money on this project, 
+and if it ever gets to that point I will likely donate it to charity. The point of this project 
+is to instead be a well documented learning tool for anyone to see how I managed a semi-professional 
+codebase, to hopefully help in their pursuits of video game development. 
 
-Endless waves of ghosts will spawn and it is up the player to defeat each wave 
-of ghosts before they defeat you! Various easter eggs, powerups, and unlockable
-areas can be found around the finite map. 
+## Where is the project going?
+I cant give any specific details, but here is a rough road map in order of what needs to happen:
+- Build a polished first attempt of release of the video game itself.
+- Get community feedback from people play testing the game to see what needs to change.
+- Implement those changes.
+- Crack down and document as much useful information about how the games works as I can.
+- Move on to the next project.
 
-In no way is any of this code perfessional, but I am going for a clean, simple,
-and modular setup with my code. I do not intend to actively maintain this 
-project, its just a little project Im working on right now. 
+## How can I play this game?
+Currently, you have to compile the game yourself. Download the latest version 4 of the [Godot Engine](https://godotengine.org/download) for 
+your os, download this project, import and open it in the Godot editor, and click the run button 
+in the top right. Or, hit f5 instead.
+
+## How active is this projects development?
+With college starting soon, I cant guarantee anything specific, but if and when I have free time and 
+want to work on something interesting, good chance I will work on this project, at least a little bit.
