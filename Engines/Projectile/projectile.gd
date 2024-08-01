@@ -5,7 +5,7 @@ extends CharacterBody2D
 ## needs a custom hitbox, health engine, and collision shape.
 class_name Projectile
 
-@export var speed: float = 600
+@export var speed: float = 1000
 
 # Some node in the 2d space the bullet can remember.
 var target: Node2D

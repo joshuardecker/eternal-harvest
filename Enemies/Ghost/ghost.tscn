@@ -211,7 +211,7 @@ graph_offset = Vector2(-270, -30)
 size = Vector2(18, 22)
 
 [node name="ghost" type="CharacterBody2D"]
-modulate = Color(1.5, 1.5, 1.5, 1)
+modulate = Color(1.2, 1.2, 1.2, 1)
 scale = Vector2(3, 3)
 script = ExtResource("1_t2ber")
 movement_type = "ai_movement"
@@ -232,12 +232,14 @@ vframes = 4
 
 [node name="DeathSprite" type="Sprite2D" parent="Sprites"]
 visible = false
+modulate = Color(2, 2, 2, 1)
 position = Vector2(0, -8)
 texture = ExtResource("3_p3eig")
 hframes = 5
 
 [node name="SummonSprite" type="Sprite2D" parent="Sprites"]
 visible = false
+modulate = Color(2, 2, 2, 1)
 position = Vector2(0, -8)
 texture = ExtResource("4_255pj")
 hframes = 4

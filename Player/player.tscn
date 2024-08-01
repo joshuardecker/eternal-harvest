@@ -470,7 +470,7 @@ drag_bottom_margin = 0.1
 [node name="PointLight" type="PointLight2D" parent="."]
 position = Vector2(0, -19)
 color = Color(1, 0.686275, 0.486275, 1)
+shadow_enabled = true
 texture = ExtResource("6_4jqn3")
-texture_scale = 0.12
 
 [connection signal="took_damage" from="HealthEngine" to="." method="_on_health_engine_took_damage"]
