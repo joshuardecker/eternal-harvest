@@ -4,3 +4,6 @@
 *.cfg
 # Dont upload the game export to github
 Export/
+# Dont upload the locally saved todo list,
+# it changes so often I dont want git tracking it
+todo.md
