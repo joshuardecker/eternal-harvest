@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://unlfm8yeette"]
+[gd_scene load_steps=11 format=3 uid="uid://unlfm8yeette"]
 
 [ext_resource type="PackedScene" uid="uid://df3s6cwpnlxn8" path="res://Enemies/Ghost/Spawner/ghost_spawner.tscn" id="5_awnpw"]
 [ext_resource type="Texture2D" uid="uid://dk8bvrxmfdk1b" path="res://World/Assets/grass-tile.png" id="5_cwqfy"]
@@ -25,6 +25,9 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_17pgy"]
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_frixy"]
 resource_name = "Rock"
 texture = ExtResource("7_fdt0e")
@@ -32,12 +35,14 @@ texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 2
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_17pgy")
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 12.75, -16, 12.75)
 
 [sub_resource type="TileSet" id="TileSet_08olc"]
 tile_size = Vector2i(32, 32)
+occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Grass"
@@ -55,7 +60,7 @@ background_mode = 3
 glow_enabled = true
 glow_normalized = true
 glow_intensity = 1.0
-glow_bloom = 0.05
+glow_bloom = 0.03
 glow_blend_mode = 0
 
 [node name="World" type="Node2D" groups=["World"]]
