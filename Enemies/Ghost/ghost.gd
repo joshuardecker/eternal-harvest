@@ -90,7 +90,7 @@ func fancy_death():
 	summon_sprite.hide()
 	
 	# despawn() is called when death animation finishes.
-	animation_player.play("death")
+	animation_tree.get("parameters/playback").travel("death")
 	death_sprite.show()
 	
 	# When the ghost is dead but playing the death animation, make it so it 
@@ -127,7 +127,7 @@ func simple_movement(speed: float):
 	move_and_slide()
 	
 	# Update the animation player to make the ghost face the correct direction.
-	animation_tree.set("parameters/Move/blend_position", velocity)
+	animation_tree.set("parameters/Move/blend_position", target_position)
 
 # Takes the feedback from the GhostAI engine and performs the action.
 func ai_movement(delta: float):
