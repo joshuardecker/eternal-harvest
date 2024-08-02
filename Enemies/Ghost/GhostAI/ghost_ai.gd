@@ -13,6 +13,17 @@ const MAGIC_B: float = 230
 # towards them.
 const CHANCE_OF_CHARGING: int = 20
 
+# The default odds of each event happening.
+# The higher the default, the more likely it will occur.
+const CHASE_PLAYER_WEIGHT: int = 4
+const ORBIT_PLAYER_WEIGHT: int = 3
+const CHARGE_PLAYER_WEIGHT: int = 3
+const ATTACK_PLAYER_WEIGHT: int = 3
+const SUMMON_ALLIE_WEIGHT: int = 0
+
+# Every how many seconds should the ai make a new decision on what to do.
+const DECISION_FREQ: float = 1
+
 # Factors considered to determine the ghosts action:
 # These are to be set by other scripts.
 const attack_range: float = 0 # TODO: give a number
@@ -20,30 +31,33 @@ var player_distance: float
 var wave_num: int
 var has_already_summoned: bool = false
 
-# This AI needs to know the parent to get its position
-# relative to the player.
-var parent: Node
-
 # Saved so the ghost AI knows how far the player always is.
 var player: Player
 
 # These values are calculated in the calculate decision func.
-# Not recommended to mess with these values.
-var chase_player_weight: int = 5
-var attack_player_weight: int = 1
-var summon_allie_weight: int = 1
+# Start as the defaults before they are randomly mutated.
+var chase_player_weight: int = 4
+var orbit_player_weight: int = 3
+var charge_player_weight: int = 3
+var attack_player_weight: int = 100
+var summon_allie_weight: int = 0
 
-# The possible actions the ghost can take according to this engine.
+# A new decision on what the ghost can do is calculated every DECISION_FREQ.
+# This number simply stores how long its been since the last decison was made,
+# so when this number is larger than the decision interval, a new one can be made.
+var internal_clock: float = 0
+
+# The possible actions the ghost can take.
 enum decision {
 	CHASE_PLAYER,
 	CHARGE_PLAYER,
 	ATTACK_PLAYER,
-	SUMMON_ALLIE
+	SUMMON_ALLIE,
+	ORBIT_PLAYER
 }
 
-# The last decision made by the calculate func.
-# Defaults is to just chase the player because thats a safe bet.
-var last_decision: decision = decision.CHASE_PLAYER
+# The current decision on what the ghost should do.
+var current_decision: decision = decision.CHASE_PLAYER
 
 func _ready():
 	# Get the player from the scene and handle if the player doesnt exist
@@ -52,69 +66,72 @@ func _ready():
 	
 	if not Player:
 		push_error("Ghost AI engine could not find the player!")
+
+func _process(delta):
+	# Time has passed, so add it to the clock.
+	internal_clock += delta
+	
+	# If its time to make a new decision on what to do.
+	if internal_clock > DECISION_FREQ:
+		new_calculate_decision()
 		
-	parent = get_parent()
+		# Reset the internal clock.
+		internal_clock = 0
 
-# Every pixel that the ghost is from the player is 1 weight towards the 
-# ghost going after the player. So if the ghost is 1 pixel away, not very likely 
-# that it will try to chase the player. But if the ghost is 500 pixels away, 
-# the 500 weight means it is very likely to chace the player.
-func linear_curve(x: float) -> int:
-	return floori(x)
-	
-# This curve is used to determine the weight of summoning an allie.
-# Its easier to visualize, so I recommend plugging in this log into
-# something like desmos. Basically, a log with these values is used
-# because the chance of summoning an allie is 0 until the ghost
-# is MAGIC_A pixels away from the player. Then it grows quickly and is the
-# highest value curve, making this action the most likely one to occur.
-# However, if the ghost is too far, the linear curve is larger, and therefore
-# means the ghost will chase the player to get closer before it spawns an allie.
-func log_curve(x: float) -> int:
-	return floori(log(x - MAGIC_A) + MAGIC_B)
+# Reset all of the weights to their default values.
+# Called every new decision.
+func reset_weights():
+	chase_player_weight = CHASE_PLAYER_WEIGHT
+	orbit_player_weight = ORBIT_PLAYER_WEIGHT
+	charge_player_weight = CHARGE_PLAYER_WEIGHT
+	attack_player_weight = ATTACK_PLAYER_WEIGHT
+	summon_allie_weight = SUMMON_ALLIE_WEIGHT
 
-# Calculates a new decision on what the ghost should do.
-func calculate_decision():
-	# Gets the player distance at this very moment.
-	player_distance = parent.global_position.distance_to(player.global_position)
+func new_calculate_decision():
+	reset_weights()
 	
-	# Details already explained above these funcs.
-	chase_player_weight = linear_curve(player_distance)
-	summon_allie_weight = log_curve(player_distance)
+	# Randomize the weight values.
+	# The higher the default value, the more likely they
+	# will be a larger number.
+	chase_player_weight = random_weight(chase_player_weight)
+	orbit_player_weight = random_weight(orbit_player_weight)
+	charge_player_weight = random_weight(charge_player_weight)
+	attack_player_weight = random_weight(attack_player_weight)
+	summon_allie_weight = random_weight(summon_allie_weight)
 	
-	# The weight of the ghost attacking the player is just the attack range in
-	# pixels. So if the attack range is greater than the distance from the
-	# player, aka the ghost can hit the player, this is the most likely thing
-	# to occur.
-	attack_player_weight = floori(attack_range)
+	# Put all of the values into an array to be sorted.
+	var weight_array: Array[int] = []
+	weight_array.append(chase_player_weight)
+	weight_array.append(orbit_player_weight)
+	weight_array.append(charge_player_weight)
+	weight_array.append(attack_player_weight)
+	weight_array.append(summon_allie_weight)
 	
-	if attack_player_weight > chase_player_weight && attack_player_weight > summon_allie_weight:
-		last_decision = decision.ATTACK_PLAYER
-	# Summon allie must be the most likely weight and checks if this ghost has
-	# already summoned an allie. If it has, this check fails, so the 
-	# ghost will just chase the player instead.
-	elif summon_allie_weight > chase_player_weight && summon_allie_weight > attack_player_weight && !has_already_summoned:
-		last_decision = decision.SUMMON_ALLIE
-		has_already_summoned = true
-	else:
-		last_decision = charge_or_chase()
+	weight_array.sort()
+	
+	# Get the highest value.
+	var highest_weight: int = weight_array.pop_back()
+	
+	# We know the largest value know, so lets quickly
+	# remember which weight had that value, and then return its 
+	# corresponding decision.
+	match highest_weight:
+		chase_player_weight:
+			current_decision = decision.CHASE_PLAYER
+		orbit_player_weight:
+			current_decision = decision.ORBIT_PLAYER
+		charge_player_weight:
+			current_decision = decision.CHARGE_PLAYER
+		attack_player_weight:
+			current_decision = decision.ATTACK_PLAYER
+		summon_allie_weight:
+			current_decision = decision.SUMMON_ALLIE
+
+# Randonly multiply the number by a int from 1 to 5.
+func random_weight(weight: int) -> int:
+	return weight * randi_range(1, 5)
 
 # Repeats what the last decision was, no new decision.
 func get_decision() -> int:
-	return last_decision
-
-# Usually will just return the decision that the ghost should chase the player.
-# But there is a small chance that the ghost instead does a charge.
-func charge_or_chase() -> decision:
-	# Generate a random int between 0 and 99.
-	var rand: int = randi() % 100
-	
-	# If the random number is less than the chance of 
-	# charging the player, charge the player.
-	# If the chance of charging is 15%, 0-14, 15 numbers total
-	# are all below 15, giving the chance of returning CHARGE_PLAYER
-	# the chance set by the CHANCE_OF_CHARGING const.
-	if rand < CHANCE_OF_CHARGING:
-		return decision.CHARGE_PLAYER
-	else:
-		return decision.CHASE_PLAYER
+	return current_decision
+	#return decision.ORBIT_PLAYER

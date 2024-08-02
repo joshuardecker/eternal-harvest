@@ -10,24 +10,15 @@ class_name Ghost
 # and dont have to hook the HealthEngine to the game manager.
 signal dead
 
-@export_enum("simple_movement", "ai_movement") var movement_type: String = "simple_movement"
-
 const SPEED: float = 60
-const CHARGE_SPEED: float = SPEED * 5
+const CHARGE_SPEED: float = SPEED * 7
+const ORBIT_SPEED: float = SPEED * 4
 
-# How often in seconds the AI engine should make a new decision on what to do.
-const AI_DECISION_FREQ: float = 1
+const CHARGE_DURATION: float = 1
+const DEATH_ANIMATION_LEN: float = 0.5
 
-# How long it will take the ghost to summon an allie in seconds.
-const SUMMON_TIME: float = 5
-
-# Use the animation tree to manipulate the ghost sprite.
-# This animation player should only be used to mess with the other sprites that
-# dont care about the ghosts movement state.
-@onready var animation_player = $AnimationPlayer
 @onready var ghost_sprite = $Sprites/GhostSprite
 @onready var death_sprite = $Sprites/DeathSprite
-@onready var summon_sprite = $Sprites/SummonSprite
 @onready var animation_tree = $AnimationTree
 @onready var hitbox_shape = $Hitbox/CollisionShape
 
@@ -36,12 +27,18 @@ var ghost_ai: GhostAI
 var player: Player
 var stats_manager: StatsManager
 
-# How long in seconds since the AIEngine made a new decision on what to do.
-var last_ai_decision_time: float
-# Keeps track if this ghost has already summoned an allie.
-# Ghosts can only summon one, so this is useful to make sure
-# multiple arnt summoned.
-var has_summoned_allie: bool = false
+# When the ghost charges, it will not charge directly at the player.
+# Instead it will have a random rotational offset. 
+# Thats this number.
+var charge_rot: float
+
+# Should the ghost orbit clockwise or counter around the player?
+var orbit_clockwise: bool
+
+# An internal clock used for the charge attack.
+# The charge attack needs to know how long it has been going for,
+# so this stores that value.
+var internal_clock: float = 0
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")
@@ -62,9 +59,16 @@ func _ready():
 	# the scene tree for the player.
 	ghost_ai = GhostAI.new()
 	add_child(ghost_ai)
-
-func _process(delta: float):
-	move(delta)
+	
+	# Either 0 or 1.
+	var rand = randi() % 2
+	
+	# When the ghost is spawned, each one will randomly choose whether
+	# they will later rotate clockwise or counter clockwise.
+	if rand == 0:
+		orbit_clockwise = true
+	else:
+		orbit_clockwise = false
 
 # Loads ther entity manager, that way the ghost can despawn.
 # Despawning any entity must go through the entity manager.
@@ -74,8 +78,12 @@ func load_entity_manager() -> EntityManager:
 	return get_tree().get_first_node_in_group("EntityManager")
 
 func despawn():
+	# Tell the entity manager to remove this ghost.
 	var entity_manager = load_entity_manager()
 	entity_manager.despawn_ghost(self)
+
+func drop_items():
+	print("I need to drop items!")
 
 func fancy_death():
 	dead.emit()
@@ -83,13 +91,6 @@ func fancy_death():
 	# Hide the ghost sprite so the death sprite can replace it.
 	ghost_sprite.hide()
 	
-	# Also make sure the summoning animation isnt playing.
-	# NOTE: this doesnt stop the summoning ability from continuing,
-	# so it is possible for a ghost to be summoned while this ghost is in
-	# the death animation.
-	summon_sprite.hide()
-	
-	# despawn() is called when death animation finishes.
 	animation_tree.get("parameters/playback").travel("death")
 	death_sprite.show()
 	
@@ -101,24 +102,48 @@ func fancy_death():
 	
 	# Tell the stats manager that the player got a kill.
 	stats_manager.update_player_kills()
-
-func drop_items():
-	print("I need to drop items!")
+	
+	# Create a timer to trigger despawning after the death animation.
+	# I used to call despawn from the death animation itself, but it
+	# wouldnt always call it for some reason.
+	var timer = Timer.new()
+	
+	timer.one_shot = true
+	add_child(timer)
+	
+	timer.start(DEATH_ANIMATION_LEN)
+	
+	await timer.timeout
+	despawn()
 
 func _on_health_engine_is_dead():
 	# Always use call deferred when calling a death func.
 	# It guarantees it only runs once when the game engine is ready for it.
 	# No errors, no nothing.
 	call_deferred("fancy_death")
+
+func _process(delta: float):
+	move(delta)
 	
+	# If the internal clock for the charge animation has counted longer
+	# than the animation itself will take, its time to reset it.
+	if internal_clock > CHARGE_DURATION:
+		# Reset the internal clock.
+		internal_clock = 0
+
+# Takes the feedback from the GhostAI engine and performs the action.
 func move(delta: float):
-	match movement_type:
-		"simple_movement":
+	match ghost_ai.get_decision():
+		GhostAI.decision.CHASE_PLAYER:
 			simple_movement(SPEED)
-		"ai_movement":
-			ai_movement(delta)
-		_:
-			push_error("This ghost is using a movement engine that doesnt exist!")
+		GhostAI.decision.ORBIT_PLAYER:
+			oribtal_movement(ORBIT_SPEED)
+		GhostAI.decision.CHARGE_PLAYER:
+			charge_movement(CHARGE_SPEED, delta)
+		GhostAI.decision.ATTACK_PLAYER:
+			call_deferred("attack_player")
+		GhostAI.decision.SUMMON_ALLIE:
+			summon_allie()
 
 # Moves the ghost directly toward the players current position.
 func simple_movement(speed: float):
@@ -127,75 +152,58 @@ func simple_movement(speed: float):
 	move_and_slide()
 	
 	# Update the animation player to make the ghost face the correct direction.
-	animation_tree.set("parameters/Move/blend_position", target_position)
+	animation_tree.set("parameters/move/blend_position", target_position)
 
-# Takes the feedback from the GhostAI engine and performs the action.
-func ai_movement(delta: float):
-	# Remember a total of how long since the last ai decision was made.
-	last_ai_decision_time += delta
+# Moves the ghost towards the player, but with a slight rotational offset,
+# that way it is near but not directly to the player.
+func rotated_movement(speed: float):
+	# If a rotation has not yet been calculated, calculate it.
+	if charge_rot == 0:
+		charge_rot = randf_range(-PI / 4, PI / 4)
 	
-	# If its been long enough, calculate a new decison on what to do.
-	# This doesnt mean behavior will change since the same answer can be
-	# given again by calculate_decision, but it could change.
-	if last_ai_decision_time > AI_DECISION_FREQ:
-		call_deferred("new_ai_decision")
+	var target_pos: Vector2 = global_position.direction_to(player.global_position)
+	# Rotate the target position by the saved rotation.
+	target_pos = target_pos.rotated(charge_rot)
+	
+	velocity = target_pos * speed
+	move_and_slide()
+	
+	# Update the animation player to make the ghost face the correct direction.
+	animation_tree.set("parameters/move/blend_position", target_pos)
+
+# Orbit around the player.
+func oribtal_movement(speed: float):
+	# The target directly towards the player.
+	var target_to_player: Vector2 = global_position.direction_to(player.global_position)
+	# The target the ghost should move towards to orbit the player.
+	var target: Vector2
+	
+	if orbit_clockwise:
+		target = target_to_player.rotated(PI / 2)
+	else:
+		target = target_to_player.rotated(-PI / 2)
 		
-	match ghost_ai.get_decision():
-		GhostAI.decision.CHASE_PLAYER:
-			# TODO: make the movement more advanced.
-			simple_movement(SPEED)
-		GhostAI.decision.SUMMON_ALLIE:
-			# If an allie has yet to be summoned.
-			if !has_summoned_allie:
-				has_summoned_allie = true
-				call_deferred("summon_allie")
-			# An allie has already been summoned, so just keep moving.
-			else:
-				simple_movement(SPEED)
-		GhostAI.decision.CHARGE_PLAYER:
-			charge_player()
-		_:
-			print("I tried to ", ghost_ai.get_decision())
-
-# Calculate a new decision and reset the timer affecting when a new decision 
-# will be made.
-func new_ai_decision():
-	ghost_ai.calculate_decision()
+	velocity = target * speed
+	move_and_slide()
 	
-	# Reset time since a decision was made.
-	last_ai_decision_time = 0
+	# Face towards the player while orbiting around.
+	animation_tree.set("parameters/move/blend_position", target_to_player)
+
+# Charge towards the player.
+func charge_movement(speed: float, delta):
+	internal_clock += delta
+	
+	# Makes the movement speed non constant, and chage over the time
+	# of the charge.
+	var speed_modifier: float = charge_speed_curve(internal_clock)
+	
+	# Dont charge directly at the player, only near.
+	rotated_movement(speed * speed_modifier)
 
 func summon_allie():
-	# Start the summon animation around the ghost.
-	animation_player.play("summon")
-	summon_sprite.show()
-	
-	# Create and initialize a timer for how long it takes a new
-	# ghost to be summoned.
-	var timer = Timer.new()
-	timer.autostart = false
-	timer.one_shot = true
-	add_child(timer)
-	
-	timer.start(SUMMON_TIME)
-	
-	# Wait for the timer to finish.
-	await timer.timeout
-	
-	# Clean up the timer since its done being used.
-	remove_child(timer)
-	timer.queue_free()
-	
-	# Hide the animation now that its done.
-	summon_sprite.hide()
-	animation_player.stop()
-	
-	# TODO: summon another ghost
-	
-func charge_player():
-	var speed_modifier: float = charge_speed_curve(last_ai_decision_time)
-	
-	simple_movement(speed_modifier * CHARGE_SPEED)
+	# This is getting completely reworked,
+	# for now do nothing.
+	print("I summoned an allie!")
 
 # I dont want charge speed to be constant, I want it to change as 
 # the ghost charges. Linear is boring so I chose a quadratic curve:
@@ -208,3 +216,11 @@ func charge_player():
 # making the attack more interesting then a constant charge speed.
 func charge_speed_curve(x: float) -> float:
 	return -1 * (2 * (x - 0.5)) * (2 * (x - 0.5)) + 1
+
+func attack_player():
+	animation_tree.set("parameters/attack/blend_position", global_position.direction_to(player.global_position))
+	animation_tree.get("parameters/playback").travel("attack")
+
+# Called by the attack animation when its finished.
+func finished_attacking():
+	animation_tree.get("parameters/playback").travel("move")

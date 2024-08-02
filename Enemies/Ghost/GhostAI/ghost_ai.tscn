@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bw5e2eif4bfl6"]
+[gd_scene load_steps=2 format=3 uid="uid://dr0csb2ojgnwb"]
 
 [ext_resource type="Script" path="res://Enemies/Ghost/GhostAI/ghost_ai.gd" id="1_nxola"]
 
