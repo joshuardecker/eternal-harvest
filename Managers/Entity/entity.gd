@@ -72,7 +72,7 @@ func despawn_ghost(ghost: Ghost):
 	# If the ghost does not exist.
 	if not ghost:
 		return
-		
+	
 	# Removes the ghost from the array.
 	# If its not found, nothing happens.
 	ghosts.erase(ghost)
@@ -127,9 +127,11 @@ func despawn_projectile(projectile: Projectile):
 # Despawns all entities known to the entity manager.
 # Also deactivates all of the ghost spawners.
 func despawn_all():
-	while ghosts.size() > 0:
-		var ghost: Ghost = ghosts.pop_back()
-		ghost.despawn()
+	for ghost in ghosts:
+		ghost.queue_free()
+		world.remove_child(ghost)
+		
+	ghosts.clear()
 	
 	# Turn off all of the spawners.
 	for spawner in ghost_spawners:
