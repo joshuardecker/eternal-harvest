@@ -30,7 +30,6 @@ func _ready():
 func _unhandled_key_input(_event):
 	if Input.is_action_pressed("escape"):
 		stop_game()
-		ui_manager.load_main_menu()
 	
 # Load and add the UI manager to the scene.
 func load_ui_manager() -> UIManager:
@@ -81,6 +80,9 @@ func stop_game():
 	
 	# Edit the UI.
 	ui_manager.unload_hud()
+	
+	# Load the main menu since the game has stopped.
+	ui_manager.load_main_menu()
 
 func quit_game():
 	get_tree().quit()
