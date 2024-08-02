@@ -41,13 +41,9 @@ var orbit_clockwise: bool
 var internal_clock: float = 0
 
 func _ready():
+	# We will check if the player exists every frame.
 	player = get_tree().get_first_node_in_group("Player")
 	
-	# If the player does not exist, just despawn.
-	if not player:
-		despawn()
-		return
-		
 	stats_manager = get_tree().get_first_node_in_group("StatsManager")
 	
 	# If the stats manager could not be found.
@@ -123,6 +119,11 @@ func _on_health_engine_is_dead():
 	call_deferred("fancy_death")
 
 func _process(delta: float):
+	# If the player does not exist, just despawn.
+	if not player:
+		despawn()
+		return
+	
 	move(delta)
 	
 	# If the internal clock for the charge animation has counted longer
