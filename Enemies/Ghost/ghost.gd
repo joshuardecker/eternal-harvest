@@ -1,14 +1,9 @@
 extends CharacterBody2D
 
-# TODO: update description to no longer say 'will' when actually added.
-## The ghost is the basic enemy of the game. It will have a couple movement types,
+## The ghost is the basic enemy of the game. It has a couple movement types,
 ## customizable health and drops, and even a boss mode.
 ## Only chases the player.
 class_name Ghost
-
-# Kind of redundant, but this exists so I can link this signal to the game manager
-# and dont have to hook the HealthEngine to the game manager.
-signal dead
 
 const SPEED: float = 60
 const CHARGE_SPEED: float = SPEED * 7
@@ -82,8 +77,6 @@ func drop_items():
 	print("I need to drop items!")
 
 func fancy_death():
-	dead.emit()
-	
 	# Hide the ghost sprite so the death sprite can replace it.
 	ghost_sprite.hide()
 	
