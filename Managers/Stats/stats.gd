@@ -4,6 +4,11 @@ extends Node2D
 ## Examples of important entities are the player and any bosses.
 class_name StatsManager
 
+# Signals useful for the hud to hook to.
+signal new_player_score(score: int)
+signal new_player_health(new_health: float)
+signal new_player_currency(new_currency: int)
+
 const PLAYER_START_HEALTH: float = 100
 
 # Player stats:
@@ -13,10 +18,14 @@ var player_score: int
 var player_health: float
 var player_currency: int
 
-# Signals useful for the hud to hook to.
-signal new_player_score(score: int)
-signal new_player_health(new_health: float)
-signal new_player_currency(new_currency: int)
+var game_manager: GameManager
+
+func _ready():
+	game_manager = get_tree().get_first_node_in_group("GameManager")
+	
+	# If the game manager was not found.
+	if not game_manager:
+		push_error("The stats manager could not load the game manager!")
 
 func reset():
 	player_kills = 0
@@ -38,6 +47,9 @@ func update_player_score(points: int):
 func update_player_health(new_health: float):
 	player_health = new_health
 	new_player_health.emit(player_health)
+	
+	if player_health <= 0:
+		game_manager.call_deferred("stop_game")
 	
 # Amount can be negative.
 # Allows for the player to gain or lose currency.
