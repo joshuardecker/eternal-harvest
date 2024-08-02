@@ -127,11 +127,8 @@ func despawn_projectile(projectile: Projectile):
 # Despawns all entities known to the entity manager.
 # Also deactivates all of the ghost spawners.
 func despawn_all():
-	for ghost in ghosts:
-		ghost.queue_free()
-		world.remove_child(ghost)
-		
-	ghosts.clear()
+	# We dont need to worry about ghosts, as they will despawn themselves 
+	# when the player is no longer spawned.
 	
 	# Turn off all of the spawners.
 	for spawner in ghost_spawners:
