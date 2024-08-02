@@ -69,8 +69,8 @@ func take_damage(area: Area2D):
 	
 	if health <= 0:
 		is_dead.emit()
-	else:
-		took_damage.emit(health)
+	
+	took_damage.emit(health)
 	
 func heal(amount: float):
 	health += amount
