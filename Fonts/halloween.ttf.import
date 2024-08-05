@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cvh6d11sybw7w"
-path="res://.godot/imported/Halloween.ttf-e9e2efb354c8987759b8f46fa4d580b3.fontdata"
+path="res://.godot/imported/halloween.ttf-d6bb6fa55c9566815b080a0c77a6220f.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Halloween.ttf"
-dest_files=["res://.godot/imported/Halloween.ttf-e9e2efb354c8987759b8f46fa4d580b3.fontdata"]
+source_file="res://Fonts/halloween.ttf"
+dest_files=["res://.godot/imported/halloween.ttf-d6bb6fa55c9566815b080a0c77a6220f.fontdata"]
 
 [params]
 
