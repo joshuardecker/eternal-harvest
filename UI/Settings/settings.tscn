@@ -1,9 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://dn2bswo10j13i"]
+[gd_scene load_steps=13 format=3 uid="uid://dn2bswo10j13i"]
 
-[ext_resource type="FontFile" uid="uid://cvh6d11sybw7w" path="res://Fonts/Halloween.ttf" id="1_5tsyr"]
+[ext_resource type="FontFile" uid="uid://8mvqm7hjubpd" path="res://Fonts/scary_forest.ttf" id="1_aykng"]
 [ext_resource type="Script" path="res://UI/Settings/settings.gd" id="1_kp3po"]
+[ext_resource type="StyleBox" uid="uid://c0uv3pgf16slg" path="res://UI/Themes/button_pressed.tres" id="1_xjf03"]
+[ext_resource type="StyleBox" uid="uid://bu83japyocajx" path="res://UI/Themes/button_normal.tres" id="2_3ff8k"]
+[ext_resource type="AudioStream" uid="uid://c5mr7o0uklgx7" path="res://UI/Assets/button_hover.wav" id="3_bquuf"]
 
-[sub_resource type="Image" id="Image_x7ryq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqj2t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f6jfb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mgvnf"]
+
+[sub_resource type="Image" id="Image_iegj4"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 179, 179, 179, 153, 178, 178, 178, 166, 184, 184, 184, 18, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 178, 178, 178, 166, 178, 178, 178, 151, 255, 255, 255, 0, 255, 255, 255, 0, 178, 178, 178, 166, 178, 178, 178, 217, 177, 177, 177, 179, 184, 184, 184, 18, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 178, 178, 178, 179, 178, 178, 178, 217, 178, 178, 178, 165, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 177, 177, 177, 179, 178, 178, 178, 217, 177, 177, 177, 179, 184, 184, 184, 18, 184, 184, 184, 18, 178, 178, 178, 179, 178, 178, 178, 217, 177, 177, 177, 179, 180, 180, 180, 17, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 177, 177, 177, 179, 178, 178, 178, 217, 178, 178, 178, 197, 178, 178, 178, 197, 178, 178, 178, 217, 177, 177, 177, 179, 180, 180, 180, 17, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 177, 177, 177, 179, 178, 178, 178, 217, 178, 178, 178, 217, 177, 177, 177, 179, 180, 180, 180, 17, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 184, 184, 184, 18, 178, 178, 178, 165, 178, 178, 178, 165, 180, 180, 180, 17, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -13,11 +22,23 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_kxrxx"]
-image = SubResource("Image_x7ryq")
+image = SubResource("Image_iegj4")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_34dlp"]
 
 [sub_resource type="Theme" id="Theme_xlxih"]
-default_font = ExtResource("1_5tsyr")
+default_font = ExtResource("1_aykng")
 default_font_size = 60
+Button/styles/disabled = SubResource("StyleBoxEmpty_fqj2t")
+Button/styles/focus = SubResource("StyleBoxEmpty_f6jfb")
+Button/styles/hover = ExtResource("1_xjf03")
+Button/styles/normal = ExtResource("2_3ff8k")
+Button/styles/pressed = ExtResource("1_xjf03")
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_mgvnf")
+CheckBox/styles/hover = ExtResource("1_xjf03")
+CheckBox/styles/hover_pressed = ExtResource("1_xjf03")
+CheckBox/styles/normal = ExtResource("2_3ff8k")
+CheckBox/styles/pressed = ExtResource("2_3ff8k")
 OptionButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 OptionButton/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 OptionButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
@@ -30,6 +51,10 @@ OptionButton/constants/h_separation = 4
 OptionButton/constants/modulate_arrow = 0
 OptionButton/constants/outline_size = 0
 OptionButton/icons/arrow = SubResource("ImageTexture_kxrxx")
+OptionButton/styles/focus = SubResource("StyleBoxEmpty_34dlp")
+OptionButton/styles/hover = ExtResource("1_xjf03")
+OptionButton/styles/normal = ExtResource("2_3ff8k")
+OptionButton/styles/pressed = ExtResource("1_xjf03")
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -49,8 +74,9 @@ offset_top = 100.0
 offset_right = 1920.0
 offset_bottom = 239.0
 
-[node name="Label" type="Label" parent="CenterContainer"]
+[node name="SettingsTitle" type="Label" parent="CenterContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 150
 text = "Settings"
 
 [node name="CenterContainer2" type="CenterContainer" parent="."]
@@ -66,6 +92,10 @@ alignment = 1
 layout_mode = 2
 text = "  Fullscreen?"
 
+[node name="VSeparator" type="VSeparator" parent="CenterContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
 [node name="VSync" type="OptionButton" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -76,10 +106,19 @@ popup/item_0/id = 0
 popup/item_1/text = "VSync Enabled"
 popup/item_1/id = 1
 
+[node name="VSeparator2" type="VSeparator" parent="CenterContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
 [node name="Back" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Back"
 
+[node name="ButtonHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bquuf")
+
 [connection signal="pressed" from="CenterContainer2/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_pressed"]
 [connection signal="item_selected" from="CenterContainer2/VBoxContainer/VSync" to="." method="_on_v_sync_item_selected"]
+[connection signal="mouse_entered" from="CenterContainer2/VBoxContainer/VSync" to="." method="_on_v_sync_mouse_entered"]
+[connection signal="mouse_entered" from="CenterContainer2/VBoxContainer/Back" to="." method="_on_back_mouse_entered"]
 [connection signal="pressed" from="CenterContainer2/VBoxContainer/Back" to="." method="_on_back_pressed"]

@@ -7,10 +7,15 @@ signal back
 @onready var fullscreen_button = $CenterContainer2/VBoxContainer/Fullscreen
 @onready var vsync_button = $CenterContainer2/VBoxContainer/VSync
 @onready var back_button = $CenterContainer2/VBoxContainer/Back
+@onready var button_hover: AudioStreamPlayer = $ButtonHover
+@onready var settings_title = $CenterContainer
 
 # Needs this to tell the UI manager when to return back to the main menu.
 var ui_manager: UIManager
 var settings_manager: SettingsManager
+
+var y_cord: float
+var internal_timer: float
 
 func _ready():
 	# Load the nessesary managers.
@@ -18,6 +23,8 @@ func _ready():
 	settings_manager = load_settings_manager()
 	
 	load_settings()
+	
+	y_cord = settings_title.global_position.y
 
 func _on_fullscreen_pressed():
 	settings_manager.fullscreen = fullscreen_button.button_pressed
@@ -69,3 +76,17 @@ func load_settings():
 	# Vsync is disabled, so have that button selected in the settings.
 	else:
 		vsync_button.selected = 0
+
+func _on_v_sync_mouse_entered():
+	button_hover.play()
+
+func _on_back_mouse_entered():
+	button_hover.play()
+
+func _process(delta):
+	internal_timer += delta
+	
+	settings_title.global_position.y = y_cord + custom_sin(internal_timer)
+	
+func custom_sin(num: float) -> float:
+	return sin(num) * 20
