@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://criud4mjonr57"]
 
-[ext_resource type="FontFile" uid="uid://cvh6d11sybw7w" path="res://Fonts/Halloween.ttf" id="1_ct374"]
+[ext_resource type="FontFile" uid="uid://cvh6d11sybw7w" path="res://Fonts/halloween.ttf" id="1_ct374"]
 [ext_resource type="Script" path="res://UI/Hud/hud.gd" id="1_ttt36"]
 
 [sub_resource type="Theme" id="Theme_o0jr0"]
