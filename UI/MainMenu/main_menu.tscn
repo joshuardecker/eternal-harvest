@@ -1,11 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgrn7ehy1rtcq"]
+[gd_scene load_steps=9 format=3 uid="uid://cgrn7ehy1rtcq"]
 
 [ext_resource type="Script" path="res://UI/MainMenu/main_menu.gd" id="1_3w8pi"]
-[ext_resource type="FontFile" uid="uid://cvh6d11sybw7w" path="res://Fonts/Halloween.ttf" id="2_3vgl8"]
+[ext_resource type="StyleBox" uid="uid://c0uv3pgf16slg" path="res://UI/Themes/button_pressed.tres" id="1_u6u8u"]
+[ext_resource type="StyleBox" uid="uid://bu83japyocajx" path="res://UI/Themes/button_normal.tres" id="2_qm47b"]
+[ext_resource type="FontFile" uid="uid://8mvqm7hjubpd" path="res://Fonts/scary_forest.ttf" id="3_obqne"]
+[ext_resource type="AudioStream" uid="uid://c5mr7o0uklgx7" path="res://UI/Assets/button_hover.wav" id="3_tj4k0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lwnka"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_klg2h"]
 
 [sub_resource type="Theme" id="Theme_xlwg6"]
-default_font = ExtResource("2_3vgl8")
-default_font_size = 60
+default_font = ExtResource("3_obqne")
+default_font_size = 80
+Button/styles/disabled = SubResource("StyleBoxEmpty_lwnka")
+Button/styles/focus = SubResource("StyleBoxEmpty_klg2h")
+Button/styles/hover = ExtResource("1_u6u8u")
+Button/styles/normal = ExtResource("2_qm47b")
+Button/styles/pressed = ExtResource("1_u6u8u")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,16 +27,20 @@ script = ExtResource("1_3w8pi")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_top = 100.0
+offset_top = -60.0
 offset_right = 1920.0
-offset_bottom = 243.0
+offset_bottom = 516.0
 
 [node name="GameTitle" type="Label" parent="CenterContainer"]
 layout_mode = 2
-text = "Darkest Harvest"
+theme_override_font_sizes/font_size = 150
+text = "Darkest
+    Harvest"
+vertical_alignment = 1
 
 [node name="CenterContainer2" type="CenterContainer" parent="."]
 layout_mode = 0
+offset_top = 311.0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
@@ -35,14 +51,28 @@ layout_mode = 2
 layout_mode = 2
 text = "Start Game"
 
+[node name="VSeparator" type="VSeparator" parent="CenterContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
 [node name="Settings" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
+
+[node name="VSeparator2" type="VSeparator" parent="CenterContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 
 [node name="Exit" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
 
+[node name="ButtonHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tj4k0")
+
+[connection signal="mouse_entered" from="CenterContainer2/VBoxContainer/Start" to="." method="_on_start_mouse_entered"]
 [connection signal="pressed" from="CenterContainer2/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="CenterContainer2/VBoxContainer/Settings" to="." method="_on_settings_mouse_entered"]
 [connection signal="pressed" from="CenterContainer2/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="CenterContainer2/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="CenterContainer2/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
