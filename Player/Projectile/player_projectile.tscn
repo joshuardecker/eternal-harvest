@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dgjwadvxklpb1"]
 
-[ext_resource type="Script" path="res://Engines/Projectile/projectile.gd" id="1_dbvfs"]
+[ext_resource type="Script" path="res://Components/Projectile/projectile.gd" id="1_dbvfs"]
 [ext_resource type="Texture2D" uid="uid://dek80idawkcwx" path="res://Player/Assets/Bullet.png" id="2_ioafo"]
-[ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_g80d7"]
-[ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="4_06yxe"]
+[ext_resource type="Script" path="res://Components/Health/health.gd" id="3_g80d7"]
+[ext_resource type="Script" path="res://Components/Hitbox/hitbox.gd" id="4_06yxe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2n6n"]
 

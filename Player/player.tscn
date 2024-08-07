@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_njaer"]
 [ext_resource type="Texture2D" uid="uid://byf4bod6rrtwf" path="res://Player/Assets/pumpkin-player.png" id="2_lsqsm"]
-[ext_resource type="Script" path="res://Engines/Health/health.gd" id="3_uy5c7"]
+[ext_resource type="Script" path="res://Components/Health/health.gd" id="3_uy5c7"]
 [ext_resource type="Script" path="res://Player/GunEngine/gun_engine.gd" id="4_1v6bh"]
-[ext_resource type="Script" path="res://Engines/Hitbox/hitbox.gd" id="5_rd677"]
+[ext_resource type="Script" path="res://Components/Hitbox/hitbox.gd" id="5_rd677"]
 [ext_resource type="Texture2D" uid="uid://d0p1dltlc3bmy" path="res://World/Assets/Light.png" id="6_4jqn3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pghi"]
