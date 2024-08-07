@@ -24,13 +24,6 @@ const SUMMON_ALLIE_WEIGHT: int = 0
 # Every how many seconds should the ai make a new decision on what to do.
 const DECISION_FREQ: float = 1
 
-# Factors considered to determine the ghosts action:
-# These are to be set by other scripts.
-const attack_range: float = 0 # TODO: give a number
-var player_distance: float
-var wave_num: int
-var has_already_summoned: bool = false
-
 # Saved so the ghost AI knows how far the player always is.
 var player: Player
 
@@ -60,12 +53,11 @@ enum decision {
 var current_decision: decision = decision.CHASE_PLAYER
 
 func _ready():
-	# Get the player from the scene and handle if the player doesnt exist
-	# for some reason.
 	player = get_tree().get_first_node_in_group("Player")
 	
+	# If the player could not be loaded.
 	if not Player:
-		push_error("Ghost AI engine could not find the player!")
+		push_error("Ghost AI could not find the player!")
 
 func _process(delta):
 	# Time has passed, so add it to the clock.
@@ -134,4 +126,3 @@ func random_weight(weight: int) -> int:
 # Repeats what the last decision was, no new decision.
 func get_decision() -> int:
 	return current_decision
-	#return decision.ORBIT_PLAYER
