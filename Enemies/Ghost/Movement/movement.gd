@@ -1,5 +1,11 @@
 extends Node2D
 
+# Since the AI is handled here, these signals are not for movement,
+# yet known here, so lets pass this information on for the parent to 
+# deal with.
+signal attacking_player
+signal raising_allie
+
 const SPEED: float = 60
 const CHARGE_SPEED: float = SPEED * 7
 const ORBIT_SPEED: float = SPEED * 4
@@ -37,8 +43,10 @@ func get_movement_vec(delta: float) -> Vector2:
 		GhostAI.decision.CHARGE_PLAYER:
 			return charge_movement(delta)
 		GhostAI.decision.ATTACK_PLAYER:
+			attacking_player.emit()
 			return Vector2.ZERO
 		GhostAI.decision.SUMMON_ALLIE:
+			raising_allie.emit()
 			return Vector2.ZERO
 		_:
 			# Shouldnt ever reach this point.
