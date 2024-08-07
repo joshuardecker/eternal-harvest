@@ -1,8 +1,0 @@
-Due note that the sound effects are not made in house.
-The music is but the sound effects on their own are not.
-To read more about the license protecting the sound assets,
-go to: https://pixabay.com/service/terms/
-
-The summary here is that they are perfectly fine to ship with
-the software, but you cannot distribute them on their own.
-Again, read their license to learn about the details.
