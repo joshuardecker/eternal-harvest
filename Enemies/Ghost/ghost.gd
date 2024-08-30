@@ -8,7 +8,7 @@ class_name Ghost
 # In seconds.
 const DEATH_ANIMATION_LEN: float = 0.5
 
-@onready var movement: Node2D = $Movement
+@onready var movement: Node2D = $Move
 
 @onready var ghost_sprite = $Sprites/GhostSprite
 @onready var death_sprite = $Sprites/DeathSprite
@@ -57,6 +57,10 @@ func _process(delta: float):
 		return
 		
 	velocity = movement.get_movement_vec(delta)
+	
+	# Update the animation player to make the ghost face the correct direction.
+	animation_tree.set("parameters/move/blend_position", velocity)
+	
 	move_and_slide()
 
 # For the ghost to have a death animation, drops items, etc
