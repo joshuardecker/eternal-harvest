@@ -7,8 +7,8 @@ signal attacking_player
 signal raising_allie
 
 const SPEED: float = 60
-const CHARGE_SPEED: float = SPEED * 7
-const ORBIT_SPEED: float = SPEED * 4
+const CHARGE_SPEED: float = SPEED * 5
+const ORBIT_SPEED: float = SPEED * 8
 
 const CHARGE_DURATION: float = 1
 
@@ -80,9 +80,6 @@ func _ready():
 func direct_movement() -> Vector2:
 	var target_position: Vector2 = global_position.direction_to(player.global_position)
 	
-	# Update the animation player to make the ghost face the correct direction.
-	animation_tree.set("parameters/move/blend_position", target_position)
-	
 	return target_position * SPEED
 
 # Returns a movement vector to orbit around the player.
@@ -96,9 +93,6 @@ func oribtal_movement() -> Vector2:
 		target = target_to_player.rotated(PI / 2)
 	else:
 		target = target_to_player.rotated(-PI / 2)
-	
-	# Face towards the player while orbiting around.
-	animation_tree.set("parameters/move/blend_position", target_to_player)
 	
 	return target * ORBIT_SPEED
 
@@ -125,9 +119,6 @@ func rotated_movement(speed: float) -> Vector2:
 	var target_pos: Vector2 = global_position.direction_to(player.global_position)
 	# Rotate the target position by the saved rotation.
 	target_pos = target_pos.rotated(charge_rotation)
-	
-	# Update the animation player to make the ghost face the correct direction.
-	animation_tree.set("parameters/move/blend_position", target_pos)
 	
 	return target_pos * speed
 
