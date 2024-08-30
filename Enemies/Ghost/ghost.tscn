@@ -328,7 +328,7 @@ modulate = Color(1.2, 1.2, 1.2, 1)
 scale = Vector2(3, 3)
 script = ExtResource("1_t2ber")
 
-[node name="Movement" type="Node2D" parent="."]
+[node name="Move" type="Node2D" parent="."]
 script = ExtResource("2_e7v7t")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -352,7 +352,6 @@ modulate = Color(2, 2, 2, 1)
 position = Vector2(0, -8)
 texture = ExtResource("3_p3eig")
 hframes = 5
-frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
