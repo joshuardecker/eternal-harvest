@@ -8,16 +8,13 @@ class_name Player
 
 ## When the player shoots.
 signal shoot
-signal took_damage(health_now: float)
-## When the player dies.
-signal is_dead
 
 ## Pixels per second the player moves.
 @export var speed: float = 300
 @onready var animation_tree = $AnimationTree
 
 # Engines:
-@onready var health_engine = $HealthEngine
+@onready var health_engine = $Health
 
 # The players inventory.
 var inventory: Inventory
