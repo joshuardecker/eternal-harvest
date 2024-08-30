@@ -4,7 +4,7 @@ extends Node2D
 ## Very versatile and can be used for any create, including the player.
 ## All variables are configurable, and signals are sent out when important
 ## events happen.
-class_name HealthEngine
+class_name HealthComponent
 
 @export var health: float = 1
 ## Each armor is a 1% damage reduction.
