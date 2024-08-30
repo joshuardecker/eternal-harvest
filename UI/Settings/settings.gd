@@ -2,8 +2,6 @@ extends Control
 
 class_name SettingsMenu
 
-signal back
-
 @onready var fullscreen_button = $CenterContainer2/VBoxContainer/Fullscreen
 @onready var vsync_button = $CenterContainer2/VBoxContainer/VSync
 @onready var back_button = $CenterContainer2/VBoxContainer/Back
