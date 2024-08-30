@@ -41,11 +41,11 @@ func _ready():
 		
 	entity_manager.load_projectile(self)
 	
-	var health_engine: HealthEngine
+	var health_engine: HealthComponent
 	
 	# Automatically try to load a child HealthEngine.
 	for child in get_children():
-		if child is HealthEngine:
+		if child is HealthComponent:
 			health_engine = child
 			break
 			
